@@ -10,89 +10,128 @@
 
   <style>
     :root {
-      --bg-color: #fdf8f5;
       --card-bg: #ffffff;
-      --accent: #e07a5f;
-      --secondary: #6c5ce7;
-      --teal: #2a9d8f;
-      --gold: #f4a261;
-      --text: #3d405b;
+      --pink: #ff758c;
+      --purple: #6c5ce7;
+      --teal: #00cec9;
+      --yellow: #fdcb6e;
+      --orange: #e17055;
+      --text: #2d3436;
     }
+
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: var(--bg-color);
+      /* Vibrant animated pastel gradient background */
+      background: linear-gradient(-45deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
       color: var(--text);
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 20px;
+      min-height: 100vh;
     }
-    header { text-align: center; margin-top: 20px; }
-    h1 { font-size: 2.5rem; color: var(--accent); margin-bottom: 5px; }
-    .subtitle { font-size: 1.1rem; opacity: 0.8; }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    header { text-align: center; margin-top: 15px; }
     
-    /* Countdown Timer */
+    h1 {
+      font-size: 2.8rem;
+      /* Gradient text styling */
+      background: linear-gradient(45deg, #d63031, #e84393, #6c5ce7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 5px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: #4a4a4a;
+      font-weight: 500;
+    }
+    
+    /* Vibrant Countdown Timer */
     .countdown {
       display: flex;
       gap: 15px;
       margin: 20px 0;
-      background: var(--card-bg);
+      background: rgba(255, 255, 255, 0.9);
       padding: 15px 25px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(232, 67, 147, 0.15);
+      border: 3px solid #ff758c;
     }
     .time-box { text-align: center; }
-    .time-box span { font-size: 1.8rem; font-weight: bold; color: var(--accent); display: block; }
+    .time-box span { font-size: 2rem; font-weight: bold; color: var(--purple); display: block; }
 
-    /* Container Boxes */
+    /* Colorful Card Containers */
     .box {
-      background: var(--card-bg);
+      background: rgba(255, 255, 255, 0.95);
       max-width: 500px;
       width: 100%;
-      border-radius: 16px;
+      border-radius: 20px;
       padding: 25px;
       text-align: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
       margin-bottom: 25px;
       box-sizing: border-box;
+      border-top: 6px solid var(--pink);
+      transition: transform 0.3s ease;
+    }
+
+    .box:nth-child(even) {
+      border-top-color: var(--teal);
+    }
+
+    .box h3 {
+      color: var(--purple);
+      margin-top: 0;
+      font-size: 1.35rem;
     }
 
     /* Buttons & Inputs */
     .btn {
-      background: var(--accent);
+      background: linear-gradient(45deg, #ff758c, #ff7eb3);
       color: white;
       border: none;
-      padding: 12px 20px;
+      padding: 12px 24px;
       font-size: 1rem;
+      font-weight: bold;
       border-radius: 25px;
       cursor: pointer;
-      transition: transform 0.2s, background 0.2s;
+      box-shadow: 0 4px 15px rgba(255, 117, 140, 0.4);
+      transition: all 0.2s;
       margin-top: 10px;
     }
-    .btn:hover { transform: scale(1.03); background: #d0694f; }
+    .btn:hover { transform: translateY(-2px) scale(1.02); }
     
     .quiz-btn {
-      background: var(--secondary);
+      background: linear-gradient(45deg, #a29bfe, #6c5ce7);
       width: 100%;
-      margin: 6px 0;
+      margin: 8px 0;
+      box-shadow: 0 4px 12px rgba(108, 92, 231, 0.3);
     }
 
     input[type="text"] {
       padding: 12px;
-      border: 2px solid #e0e0e0;
-      border-radius: 8px;
+      border: 2px solid #a29bfe;
+      border-radius: 12px;
       font-size: 1rem;
       text-align: center;
       width: 80%;
       outline: none;
       margin-top: 10px;
     }
-    input[type="text"]:focus {
-      border-color: var(--teal);
-    }
 
-    /* Flip Cards Grid */
+    /* Colorful Flip Cards Grid */
     .cards-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -112,7 +151,7 @@
       text-align: center;
       transition: transform 0.6s;
       transform-style: preserve-3d;
-      border-radius: 10px;
+      border-radius: 15px;
     }
     .flip-card.flipped .flip-card-inner {
       transform: rotateY(180deg);
@@ -123,26 +162,29 @@
       height: 100%;
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
-      border-radius: 10px;
+      border-radius: 15px;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 10px;
       box-sizing: border-box;
-    }
-    .flip-card-front {
-      background-color: var(--gold);
-      color: white;
       font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
+    .flip-card:nth-child(1) .flip-card-front { background: linear-gradient(45deg, #ff7675, #fab1a0); color: white; }
+    .flip-card:nth-child(2) .flip-card-front { background: linear-gradient(45deg, #74b9ff, #0984e3); color: white; }
+    .flip-card:nth-child(3) .flip-card-front { background: linear-gradient(45deg, #55efc4, #00b894); color: white; }
+    .flip-card:nth-child(4) .flip-card-front { background: linear-gradient(45deg, #fdcb6e, #e17055); color: white; }
+    
     .flip-card-back {
-      background-color: var(--teal);
+      background-color: #2d3436;
       color: white;
       transform: rotateY(180deg);
       font-size: 0.85rem;
+      font-weight: normal;
     }
 
-    /* Digital Envelopes */
+    /* Vibrant Digital Envelopes */
     .envelope-grid {
       display: flex;
       flex-direction: column;
@@ -150,24 +192,24 @@
       margin-top: 15px;
     }
     .envelope-btn {
-      background: var(--card-bg);
-      border: 2px solid var(--accent);
-      color: var(--text);
+      background: #ffffff;
+      border: 2px solid var(--purple);
+      color: var(--purple);
       padding: 12px;
-      border-radius: 10px;
-      font-weight: 500;
+      border-radius: 12px;
+      font-weight: bold;
       cursor: pointer;
       transition: all 0.2s;
     }
     .envelope-btn:hover {
-      background: var(--accent);
+      background: var(--purple);
       color: white;
     }
     .envelope-content {
-      background: #fff8f5;
-      border-left: 4px solid var(--accent);
+      background: #f1f2f6;
+      border-left: 5px solid var(--pink);
       padding: 12px;
-      border-radius: 4px;
+      border-radius: 8px;
       margin-top: 8px;
       font-size: 0.95rem;
       text-align: left;
@@ -175,14 +217,14 @@
     }
 
     .hidden { display: none; }
-    .progress-bar { font-size: 0.85rem; color: #888; margin-bottom: 10px; }
+    .progress-bar { font-size: 0.9rem; color: #636e72; font-weight: bold; margin-bottom: 10px; }
   </style>
 </head>
 <body>
 
   <header>
     <h1>Happy Birthday, Sobana! 🎉</h1>
-    <p class="subtitle">A special space created just for you on September 17th.</p>
+    <p class="subtitle">A special colorful space built just for you on September 17th.</p>
   </header>
 
   <!-- Countdown Timer -->
@@ -197,28 +239,28 @@
   <div class="box" id="quiz-box">
     <h3>✨ Birthday Challenge: 10 Trivia Questions</h3>
     <div class="progress-bar" id="quiz-progress">Question 1 of 10</div>
-    <p id="quiz-question" style="font-size: 1.1rem; font-weight: 500;">Loading question...</p>
+    <p id="quiz-question" style="font-size: 1.1rem; font-weight: 600;">Loading question...</p>
     
     <div id="quiz-options"></div>
-    <p id="quiz-feedback" style="margin-top: 10px; font-weight: bold; color: var(--accent);"></p>
+    <p id="quiz-feedback" style="margin-top: 10px; font-weight: bold; color: var(--pink);"></p>
   </div>
 
   <!-- Section 2: Appreciation Generator -->
-  <div class="box hidden" id="appreciation-box">
-    <h3>✨ Traits That Make You Unique</h3>
-    <p style="font-size: 0.9rem; color: #666;">Tap below to reveal things noticed and admired about you:</p>
+  <div class="box hidden" id="appreciation-box" style="border-top-color: var(--teal);">
+    <h3>🌈 Traits That Make You Unique</h3>
+    <p style="font-size: 0.9rem; color: #636e72;">Tap below to reveal things noticed and admired about you:</p>
     
-    <div id="trait-display" style="min-height: 60px; margin: 15px 0; font-weight: 500; color: var(--accent); line-height: 1.5; display: flex; align-items: center; justify-content: center;">
+    <div id="trait-display" style="min-height: 60px; margin: 15px 0; font-weight: 600; color: var(--purple); line-height: 1.5; display: flex; align-items: center; justify-content: center;">
       "Tap the button to start..."
     </div>
     
-    <button class="btn" style="background: var(--teal);" onclick="showNextTrait()">Reveal Note ✨</button>
+    <button class="btn" style="background: linear-gradient(45deg, #00cec9, #0984e3);" onclick="showNextTrait()">Reveal Note ✨</button>
   </div>
 
   <!-- Section 3: "Open When..." Digital Envelopes -->
-  <div class="box hidden" id="envelopes-box">
+  <div class="box hidden" id="envelopes-box" style="border-top-color: var(--purple);">
     <h3>✉️ Digital "Open When..." Envelopes</h3>
-    <p style="font-size: 0.9rem; color: #666;">Select an envelope whenever you need it:</p>
+    <p style="font-size: 0.9rem; color: #636e72;">Select an envelope whenever you need it:</p>
     
     <div class="envelope-grid">
       <div>
@@ -243,31 +285,31 @@
   </div>
 
   <!-- Section 4: Flip-Card Memory Wall -->
-  <div class="box hidden" id="cards-box">
+  <div class="box hidden" id="cards-box" style="border-top-color: var(--yellow);">
     <h3>🎴 Tap Cards to Reveal Wishes</h3>
-    <p style="font-size: 0.9rem; color: #666;">Tap each card to flip it over!</p>
+    <p style="font-size: 0.9rem; color: #636e72;">Tap each card to flip it over!</p>
     <div class="cards-grid">
       <div class="flip-card" onclick="this.classList.toggle('flipped')">
         <div class="flip-card-inner">
-          <div class="flip-card-front">Wish #1</div>
+          <div class="flip-card-front">Wish #1 🌸</div>
           <div class="flip-card-back">May this year bring you endless peace and happiness.</div>
         </div>
       </div>
       <div class="flip-card" onclick="this.classList.toggle('flipped')">
         <div class="flip-card-inner">
-          <div class="flip-card-front">Wish #2</div>
+          <div class="flip-card-front">Wish #2 🌟</div>
           <div class="flip-card-back">Success in all your future goals and pursuits.</div>
         </div>
       </div>
       <div class="flip-card" onclick="this.classList.toggle('flipped')">
         <div class="flip-card-inner">
-          <div class="flip-card-front">Wish #3</div>
+          <div class="flip-card-front">Wish #3 ☀️</div>
           <div class="flip-card-back">Keep smiling and bringing positive light everywhere.</div>
         </div>
       </div>
       <div class="flip-card" onclick="this.classList.toggle('flipped')">
         <div class="flip-card-inner">
-          <div class="flip-card-front">Wish #4</div>
+          <div class="flip-card-front">Wish #4 🎉</div>
           <div class="flip-card-back">Have an unforgettable September 17 celebration!</div>
         </div>
       </div>
@@ -275,24 +317,24 @@
   </div>
 
   <!-- Section 5: Make A Birthday Wish Canvas -->
-  <div class="box hidden" id="wish-canvas-box">
-    <h3>🌟 Make Your Birthday Wish</h3>
-    <p style="font-size: 0.9rem; color: #666;">Type a goal or wish for your coming year and launch it into the sky:</p>
+  <div class="box hidden" id="wish-canvas-box" style="border-top-color: var(--pink);">
+    <h3>🌟 Launch Your Birthday Wish</h3>
+    <p style="font-size: 0.9rem; color: #636e72;">Type a goal or wish for your coming year and launch it into the sky:</p>
     <input type="text" id="user-wish" placeholder="I wish for..." />
     <br>
-    <button class="btn" style="background: var(--teal);" onclick="sendWish()">Launch Wish ✨</button>
-    <div id="wish-display" style="margin-top: 15px; font-weight: 500; color: var(--teal); line-height: 1.5;"></div>
+    <button class="btn" style="background: linear-gradient(45deg, #e84393, #ff7675);" onclick="sendWish()">Launch Wish ✨</button>
+    <div id="wish-display" style="margin-top: 15px; font-weight: 600; color: var(--purple); line-height: 1.5;"></div>
   </div>
 
   <!-- Section 6: Password Locked Gift Box -->
-  <div class="box hidden" id="lock-box">
+  <div class="box hidden" id="lock-box" style="border-top-color: var(--teal);">
     <h3>🎁 Unlock the Final Note</h3>
-    <p style="font-size: 0.95rem; color: #666;">Enter the secret code (Hint: Birthday date <b>1709</b>):</p>
+    <p style="font-size: 0.95rem; color: #636e72;">Enter the secret code (Hint: Birthday date <b>1709</b>):</p>
     <input type="text" id="passcode" placeholder="Enter key..." />
     <br>
     <button class="btn" onclick="unlockBox()">Unlock Message 🔑</button>
     
-    <div id="secret-message" class="hidden" style="margin-top: 20px; line-height: 1.6;">
+    <div id="secret-message" class="hidden" style="margin-top: 20px; line-height: 1.6; font-size: 1.05rem;">
       <p>Dear Sobana,</p>
       <p>Happy Birthday! On this September 17th, I wish you nothing but clarity, strength, and genuine fulfillment in everything you do. May this year open wonderful new chapters for you!</p>
     </div>
@@ -331,7 +373,7 @@
           optsContainer.appendChild(btn);
         });
       } else {
-        // Quiz completed -> Unlocks all interactive sections below
+        // Quiz completed
         document.getElementById('quiz-box').innerHTML = '<h3>🎉 Quiz Complete! 10/10!</h3><p>You unlocked all the interactive notes and surprises below!</p>';
         document.getElementById('appreciation-box').classList.remove('hidden');
         document.getElementById('envelopes-box').classList.remove('hidden');
@@ -408,7 +450,7 @@
     }
 
     function triggerConfetti() {
-      confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+      confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
     }
 
     // Countdown Logic for Sept 17, 2026
