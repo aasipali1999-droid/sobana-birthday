@@ -41,16 +41,34 @@
     .time-box { text-align: center; }
     .time-box span { font-size: 1.8rem; font-weight: bold; color: var(--accent); display: block; }
     
-    /* Surprise Section */
+    /* Secret Gift Box Section */
     .surprise-box {
       background: var(--card-bg);
-      max-width: 500px;
+      max-width: 450px;
       width: 100%;
       border-radius: 16px;
       padding: 25px;
       text-align: center;
       box-shadow: 0 4px 20px rgba(0,0,0,0.06);
       margin-bottom: 30px;
+    }
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    input[type="text"] {
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1rem;
+      text-align: center;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input[type="text"]:focus {
+      border-color: var(--accent);
     }
     .gift-btn {
       background: var(--accent);
@@ -62,14 +80,20 @@
       cursor: pointer;
       transition: transform 0.2s, background 0.2s;
     }
-    .gift-btn:hover { transform: scale(1.05); background: #d0694f; }
+    .gift-btn:hover { transform: scale(1.03); background: #d0694f; }
     
+    .error-msg {
+      color: #e74c3c;
+      font-size: 0.9rem;
+      margin-top: 8px;
+      display: none;
+    }
     .hidden-message {
       display: none;
       margin-top: 20px;
       font-size: 1.05rem;
       line-height: 1.6;
-      animation: fadeIn 1s forwards;
+      animation: fadeIn 0.8s forwards;
     }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   </style>
@@ -89,11 +113,18 @@
     <div class="time-box"><span id="seconds">00</span>Secs</div>
   </div>
 
-  <!-- Interactive Wish Box -->
+  <!-- Virtual Unlockable Gift Box -->
   <div class="surprise-box">
-    <h3>A Special Note For You 💌</h3>
-    <button class="gift-btn" onclick="revealMessage()">Tap to Open Birthday Message</button>
+    <h3>🎁 Unlock Your Birthday Surprise</h3>
+    <p style="font-size: 0.95rem; color: #666;">Enter the secret key to open the surprise box:</p>
     
+    <div id="lock-form" class="input-group">
+      <input type="text" id="passcode" placeholder="Enter secret code..." />
+      <button class="gift-btn" onclick="unlockBox()">Unlock Message 🔑</button>
+      <div id="error-text" class="error-msg">Incorrect code! Try again.</div>
+    </div>
+    
+    <!-- Secret Message (Hidden by default) -->
     <div id="message" class="hidden-message">
       <p>Dear Sobana,</p>
       <p>On this September 17th, I hope your day is as bright and wonderful as you are. May this coming year bring you clarity, fulfillment in everything you pursue, and genuine happiness.</p>
@@ -102,6 +133,23 @@
   </div>
 
   <script>
+    // Set your secret unlock key here (case-insensitive)
+    const SECRET_KEY = "1709"; // You can change this to a date, word, or inside joke
+
+    function unlockBox() {
+      const userEntry = document.getElementById('passcode').value.trim().toLowerCase();
+      const errorText = document.getElementById('error-text');
+      const lockForm = document.getElementById('lock-form');
+      const hiddenMsg = document.getElementById('message');
+
+      if (userEntry === SECRET_KEY.toLowerCase()) {
+        lockForm.style.display = 'none';
+        hiddenMsg.style.display = 'block';
+      } else {
+        errorText.style.display = 'block';
+      }
+    }
+
     // Countdown logic for September 17, 2026
     const targetDate = new Date('September 17, 2026 00:00:00').getTime();
 
@@ -120,10 +168,6 @@
     }
     setInterval(updateCountdown, 1000);
     updateCountdown();
-
-    function revealMessage() {
-      document.getElementById('message').style.display = 'block';
-    }
   </script>
 </body>
 </html>
