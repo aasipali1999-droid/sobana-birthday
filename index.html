@@ -14,6 +14,7 @@
       --card-bg: #ffffff;
       --accent: #e07a5f;
       --secondary: #6c5ce7;
+      --teal: #2a9d8f;
       --text: #3d405b;
     }
     body {
@@ -43,7 +44,7 @@
     .time-box { text-align: center; }
     .time-box span { font-size: 1.8rem; font-weight: bold; color: var(--accent); display: block; }
 
-    /* Sections */
+    /* Container Boxes */
     .box {
       background: var(--card-bg);
       max-width: 500px;
@@ -53,6 +54,7 @@
       text-align: center;
       box-shadow: 0 4px 20px rgba(0,0,0,0.06);
       margin-bottom: 25px;
+      box-sizing: border-box;
     }
 
     /* Buttons & Inputs */
@@ -83,6 +85,10 @@
       text-align: center;
       width: 80%;
       outline: none;
+      margin-top: 10px;
+    }
+    input[type="text"]:focus {
+      border-color: var(--teal);
     }
 
     /* Flip Cards Grid */
@@ -129,7 +135,7 @@
       font-weight: bold;
     }
     .flip-card-back {
-      background-color: #2a9d8f;
+      background-color: var(--teal);
       color: white;
       transform: rotateY(180deg);
       font-size: 0.85rem;
@@ -196,7 +202,17 @@
     </div>
   </div>
 
-  <!-- Section 3: Password Locked Gift Box -->
+  <!-- Section 3: Feature 2 - Make A Birthday Wish Canvas -->
+  <div class="box hidden" id="wish-canvas-box">
+    <h3>🌟 Make Your Birthday Wish</h3>
+    <p style="font-size: 0.9rem; color: #666;">Type a goal or wish for your coming year and launch it into the sky:</p>
+    <input type="text" id="user-wish" placeholder="I wish for..." />
+    <br>
+    <button class="btn" style="background: var(--teal);" onclick="sendWish()">Launch Wish ✨</button>
+    <div id="wish-display" style="margin-top: 15px; font-weight: 500; color: var(--teal); line-height: 1.5;"></div>
+  </div>
+
+  <!-- Section 4: Password Locked Gift Box -->
   <div class="box hidden" id="lock-box">
     <h3>🎁 Unlock the Final Note</h3>
     <p style="font-size: 0.95rem; color: #666;">Enter the secret code (Hint: Birthday date <b>1709</b>):</p>
@@ -243,9 +259,10 @@
           optsContainer.appendChild(btn);
         });
       } else {
-        // Quiz completed
-        document.getElementById('quiz-box').innerHTML = '<h3>🎉 Quiz Complete! 10/10!</h3><p>You unlocked the memory cards and final gift box below!</p>';
+        // Quiz completed -> Unlocks all interactive sections below
+        document.getElementById('quiz-box').innerHTML = '<h3>🎉 Quiz Complete! 10/10!</h3><p>You unlocked the memory cards, wish launch canvas, and gift box below!</p>';
         document.getElementById('cards-box').classList.remove('hidden');
+        document.getElementById('wish-canvas-box').classList.remove('hidden');
         document.getElementById('lock-box').classList.remove('hidden');
         triggerConfetti();
       }
@@ -265,6 +282,21 @@
       }
     }
 
+    // Feature 2: Launch Wish Functionality
+    function sendWish() {
+      const wishInput = document.getElementById('user-wish');
+      const wishVal = wishInput.value.trim();
+      const display = document.getElementById('wish-display');
+      
+      if (wishVal) {
+        display.innerHTML = `✨ <b>Your wish:</b> "${wishVal}" has been launched into the sky!<br>May this coming year bring it into reality! 🌟`;
+        wishInput.value = '';
+        triggerConfetti();
+      } else {
+        display.innerText = "Please write a short wish first! 😊";
+      }
+    }
+
     function unlockBox() {
       const code = document.getElementById('passcode').value.trim();
       if (code === "1709") {
@@ -276,7 +308,7 @@
     }
 
     function triggerConfetti() {
-      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+      confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
     }
 
     // Countdown Logic for Sept 17, 2026
