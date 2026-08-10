@@ -15,6 +15,7 @@
       --accent: #e07a5f;
       --secondary: #6c5ce7;
       --teal: #2a9d8f;
+      --gold: #f4a261;
       --text: #3d405b;
     }
     body {
@@ -130,7 +131,7 @@
       box-sizing: border-box;
     }
     .flip-card-front {
-      background-color: #f4a261;
+      background-color: var(--gold);
       color: white;
       font-weight: bold;
     }
@@ -139,6 +140,38 @@
       color: white;
       transform: rotateY(180deg);
       font-size: 0.85rem;
+    }
+
+    /* Digital Envelopes */
+    .envelope-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .envelope-btn {
+      background: var(--card-bg);
+      border: 2px solid var(--accent);
+      color: var(--text);
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .envelope-btn:hover {
+      background: var(--accent);
+      color: white;
+    }
+    .envelope-content {
+      background: #fff8f5;
+      border-left: 4px solid var(--accent);
+      padding: 12px;
+      border-radius: 4px;
+      margin-top: 8px;
+      font-size: 0.95rem;
+      text-align: left;
+      line-height: 1.5;
     }
 
     .hidden { display: none; }
@@ -170,7 +203,46 @@
     <p id="quiz-feedback" style="margin-top: 10px; font-weight: bold; color: var(--accent);"></p>
   </div>
 
-  <!-- Section 2: Flip-Card Memory Wall (Unlocked after Quiz) -->
+  <!-- Section 2: Appreciation Generator -->
+  <div class="box hidden" id="appreciation-box">
+    <h3>✨ Traits That Make You Unique</h3>
+    <p style="font-size: 0.9rem; color: #666;">Tap below to reveal things noticed and admired about you:</p>
+    
+    <div id="trait-display" style="min-height: 60px; margin: 15px 0; font-weight: 500; color: var(--accent); line-height: 1.5; display: flex; align-items: center; justify-content: center;">
+      "Tap the button to start..."
+    </div>
+    
+    <button class="btn" style="background: var(--teal);" onclick="showNextTrait()">Reveal Note ✨</button>
+  </div>
+
+  <!-- Section 3: "Open When..." Digital Envelopes -->
+  <div class="box hidden" id="envelopes-box">
+    <h3>✉️ Digital "Open When..." Envelopes</h3>
+    <p style="font-size: 0.9rem; color: #666;">Select an envelope whenever you need it:</p>
+    
+    <div class="envelope-grid">
+      <div>
+        <button class="envelope-btn" style="width: 100%;" onclick="toggleEnvelope('env1')">📩 Open when you're having a long or stressful day</button>
+        <div id="env1" class="envelope-content hidden">
+          Take a deep breath and give yourself credit for how hard you work. You handle so much with quiet strength, and even on heavy days, you are doing better than you realize. Pause, rest, and trust yourself.
+        </div>
+      </div>
+      <div>
+        <button class="envelope-btn" style="width: 100%;" onclick="toggleEnvelope('env2')">📩 Open when you achieve a personal goal</button>
+        <div id="env2" class="envelope-content hidden">
+          Congratulations! Your dedication and focus always pay off. Seeing you succeed at what you put your mind to is inspiring. Celebrate your hard work today—you earned it!
+        </div>
+      </div>
+      <div>
+        <button class="envelope-btn" style="width: 100%;" onclick="toggleEnvelope('env3')">📩 Open when you need a quiet smile</button>
+        <div id="env3" class="envelope-content hidden">
+          Just a gentle reminder that your happiness matters, your peace matters, and your presence brings light and positive warmth wherever you go. Keep shining!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4: Flip-Card Memory Wall -->
   <div class="box hidden" id="cards-box">
     <h3>🎴 Tap Cards to Reveal Wishes</h3>
     <p style="font-size: 0.9rem; color: #666;">Tap each card to flip it over!</p>
@@ -202,7 +274,7 @@
     </div>
   </div>
 
-  <!-- Section 3: Feature 2 - Make A Birthday Wish Canvas -->
+  <!-- Section 5: Make A Birthday Wish Canvas -->
   <div class="box hidden" id="wish-canvas-box">
     <h3>🌟 Make Your Birthday Wish</h3>
     <p style="font-size: 0.9rem; color: #666;">Type a goal or wish for your coming year and launch it into the sky:</p>
@@ -212,7 +284,7 @@
     <div id="wish-display" style="margin-top: 15px; font-weight: 500; color: var(--teal); line-height: 1.5;"></div>
   </div>
 
-  <!-- Section 4: Password Locked Gift Box -->
+  <!-- Section 6: Password Locked Gift Box -->
   <div class="box hidden" id="lock-box">
     <h3>🎁 Unlock the Final Note</h3>
     <p style="font-size: 0.95rem; color: #666;">Enter the secret code (Hint: Birthday date <b>1709</b>):</p>
@@ -260,7 +332,9 @@
         });
       } else {
         // Quiz completed -> Unlocks all interactive sections below
-        document.getElementById('quiz-box').innerHTML = '<h3>🎉 Quiz Complete! 10/10!</h3><p>You unlocked the memory cards, wish launch canvas, and gift box below!</p>';
+        document.getElementById('quiz-box').innerHTML = '<h3>🎉 Quiz Complete! 10/10!</h3><p>You unlocked all the interactive notes and surprises below!</p>';
+        document.getElementById('appreciation-box').classList.remove('hidden');
+        document.getElementById('envelopes-box').classList.remove('hidden');
         document.getElementById('cards-box').classList.remove('hidden');
         document.getElementById('wish-canvas-box').classList.remove('hidden');
         document.getElementById('lock-box').classList.remove('hidden');
@@ -282,7 +356,33 @@
       }
     }
 
-    // Feature 2: Launch Wish Functionality
+    // Appreciation Generator Logic
+    const traits = [
+      "Your genuine focus and dedication when working toward a goal.",
+      "The quiet grace and dignity with which you handle challenging days.",
+      "Your unique sense of perspective and positive warmth.",
+      "The care, integrity, and mindfulness you bring to the people around you.",
+      "Your ability to stay grounded, resilient, and true to yourself."
+    ];
+    let traitIndex = 0;
+
+    function showNextTrait() {
+      const display = document.getElementById('trait-display');
+      display.innerText = `"${traits[traitIndex]}"`;
+      traitIndex = (traitIndex + 1) % traits.length;
+    }
+
+    // Digital Envelopes Logic
+    function toggleEnvelope(id) {
+      const el = document.getElementById(id);
+      if (el.classList.contains('hidden')) {
+        el.classList.remove('hidden');
+      } else {
+        el.classList.add('hidden');
+      }
+    }
+
+    // Wish Launcher Functionality
     function sendWish() {
       const wishInput = document.getElementById('user-wish');
       const wishVal = wishInput.value.trim();
