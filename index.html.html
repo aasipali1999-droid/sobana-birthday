@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Sobana! ✨</title>
+  <style>
+    :root {
+      --bg-color: #fdf8f5;
+      --card-bg: #ffffff;
+      --accent: #e07a5f;
+      --text: #3d405b;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    header {
+      text-align: center;
+      margin-top: 30px;
+    }
+    h1 { font-size: 2.5rem; color: var(--accent); margin-bottom: 5px; }
+    .subtitle { font-size: 1.1rem; opacity: 0.8; }
+    
+    /* Countdown Timer */
+    .countdown {
+      display: flex;
+      gap: 15px;
+      margin: 25px 0;
+      background: var(--card-bg);
+      padding: 15px 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+    .time-box { text-align: center; }
+    .time-box span { font-size: 1.8rem; font-weight: bold; color: var(--accent); display: block; }
+    
+    /* Surprise Section */
+    .surprise-box {
+      background: var(--card-bg);
+      max-width: 500px;
+      width: 100%;
+      border-radius: 16px;
+      padding: 25px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      margin-bottom: 30px;
+    }
+    .gift-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .gift-btn:hover { transform: scale(1.05); background: #d0694f; }
+    
+    .hidden-message {
+      display: none;
+      margin-top: 20px;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      animation: fadeIn 1s forwards;
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Happy Birthday, Sobana! 🎉</h1>
+    <p class="subtitle">Wishing you a year filled with happiness, peace, and success.</p>
+  </header>
+
+  <!-- Countdown Timer -->
+  <div class="countdown">
+    <div class="time-box"><span id="days">00</span>Days</div>
+    <div class="time-box"><span id="hours">00</span>Hours</div>
+    <div class="time-box"><span id="minutes">00</span>Mins</div>
+    <div class="time-box"><span id="seconds">00</span>Secs</div>
+  </div>
+
+  <!-- Interactive Wish Box -->
+  <div class="surprise-box">
+    <h3>A Special Note For You 💌</h3>
+    <button class="gift-btn" onclick="revealMessage()">Tap to Open Birthday Message</button>
+    
+    <div id="message" class="hidden-message">
+      <p>Dear Sobana,</p>
+      <p>On this September 17th, I hope your day is as bright and wonderful as you are. May this coming year bring you clarity, fulfillment in everything you pursue, and genuine happiness.</p>
+      <p>Have the happiest of birthdays!</p>
+    </div>
+  </div>
+
+  <script>
+    // Countdown logic for September 17, 2026
+    const targetDate = new Date('September 17, 2026 00:00:00').getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const diff = targetDate - now;
+
+      if (diff > 0) {
+        document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+        document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        document.getElementById('minutes').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        document.getElementById('seconds').innerText = Math.floor((diff % (1000 * 60)) / 1000);
+      } else {
+        document.querySelector('.countdown').innerHTML = "<h3>✨ It's September 17! Happy Birthday! ✨</h3>";
+      }
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    function revealMessage() {
+      document.getElementById('message').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
