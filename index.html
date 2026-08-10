@@ -4,11 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Happy Birthday Sobana! ✨</title>
+  
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
   <style>
     :root {
       --bg-color: #fdf8f5;
       --card-bg: #ffffff;
       --accent: #e07a5f;
+      --secondary: #6c5ce7;
       --text: #3d405b;
     }
     body {
@@ -21,10 +26,7 @@
       align-items: center;
       padding: 20px;
     }
-    header {
-      text-align: center;
-      margin-top: 30px;
-    }
+    header { text-align: center; margin-top: 20px; }
     h1 { font-size: 2.5rem; color: var(--accent); margin-bottom: 5px; }
     .subtitle { font-size: 1.1rem; opacity: 0.8; }
     
@@ -32,7 +34,7 @@
     .countdown {
       display: flex;
       gap: 15px;
-      margin: 25px 0;
+      margin: 20px 0;
       background: var(--card-bg);
       padding: 15px 25px;
       border-radius: 12px;
@@ -40,69 +42,108 @@
     }
     .time-box { text-align: center; }
     .time-box span { font-size: 1.8rem; font-weight: bold; color: var(--accent); display: block; }
-    
-    /* Secret Gift Box Section */
-    .surprise-box {
+
+    /* Sections */
+    .box {
       background: var(--card-bg);
-      max-width: 450px;
+      max-width: 500px;
       width: 100%;
       border-radius: 16px;
       padding: 25px;
       text-align: center;
       box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-      margin-bottom: 30px;
+      margin-bottom: 25px;
     }
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 15px;
+
+    /* Buttons & Inputs */
+    .btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1rem;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s;
+      margin-top: 10px;
     }
+    .btn:hover { transform: scale(1.03); background: #d0694f; }
+    
+    .quiz-btn {
+      background: var(--secondary);
+      width: 100%;
+      margin: 6px 0;
+    }
+
     input[type="text"] {
       padding: 12px;
       border: 2px solid #e0e0e0;
       border-radius: 8px;
       font-size: 1rem;
       text-align: center;
+      width: 80%;
       outline: none;
-      transition: border-color 0.2s;
     }
-    input[type="text"]:focus {
-      border-color: var(--accent);
+
+    /* Flip Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-top: 15px;
     }
-    .gift-btn {
-      background: var(--accent);
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      font-size: 1rem;
-      border-radius: 25px;
+    .flip-card {
+      background-color: transparent;
+      height: 120px;
+      perspective: 1000px;
       cursor: pointer;
-      transition: transform 0.2s, background 0.2s;
     }
-    .gift-btn:hover { transform: scale(1.03); background: #d0694f; }
-    
-    .error-msg {
-      color: #e74c3c;
-      font-size: 0.9rem;
-      margin-top: 8px;
-      display: none;
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+      border-radius: 10px;
     }
-    .hidden-message {
-      display: none;
-      margin-top: 20px;
-      font-size: 1.05rem;
-      line-height: 1.6;
-      animation: fadeIn 0.8s forwards;
+    .flip-card.flipped .flip-card-inner {
+      transform: rotateY(180deg);
     }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    .flip-card-front {
+      background-color: #f4a261;
+      color: white;
+      font-weight: bold;
+    }
+    .flip-card-back {
+      background-color: #2a9d8f;
+      color: white;
+      transform: rotateY(180deg);
+      font-size: 0.85rem;
+    }
+
+    .hidden { display: none; }
+    .progress-bar { font-size: 0.85rem; color: #888; margin-bottom: 10px; }
   </style>
 </head>
 <body>
 
   <header>
     <h1>Happy Birthday, Sobana! 🎉</h1>
-    <p class="subtitle">Wishing you a year filled with happiness, peace, and success.</p>
+    <p class="subtitle">A special space created just for you on September 17th.</p>
   </header>
 
   <!-- Countdown Timer -->
@@ -113,61 +154,148 @@
     <div class="time-box"><span id="seconds">00</span>Secs</div>
   </div>
 
-  <!-- Virtual Unlockable Gift Box -->
-  <div class="surprise-box">
-    <h3>🎁 Unlock Your Birthday Surprise</h3>
-    <p style="font-size: 0.95rem; color: #666;">Enter the secret key to open the surprise box:</p>
+  <!-- Section 1: 10-Question Interactive Quiz -->
+  <div class="box" id="quiz-box">
+    <h3>✨ Birthday Challenge: 10 Trivia Questions</h3>
+    <div class="progress-bar" id="quiz-progress">Question 1 of 10</div>
+    <p id="quiz-question" style="font-size: 1.1rem; font-weight: 500;">Loading question...</p>
     
-    <div id="lock-form" class="input-group">
-      <input type="text" id="passcode" placeholder="Enter secret code..." />
-      <button class="gift-btn" onclick="unlockBox()">Unlock Message 🔑</button>
-      <div id="error-text" class="error-msg">Incorrect code! Try again.</div>
+    <div id="quiz-options"></div>
+    <p id="quiz-feedback" style="margin-top: 10px; font-weight: bold; color: var(--accent);"></p>
+  </div>
+
+  <!-- Section 2: Flip-Card Memory Wall (Unlocked after Quiz) -->
+  <div class="box hidden" id="cards-box">
+    <h3>🎴 Tap Cards to Reveal Wishes</h3>
+    <p style="font-size: 0.9rem; color: #666;">Tap each card to flip it over!</p>
+    <div class="cards-grid">
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">Wish #1</div>
+          <div class="flip-card-back">May this year bring you endless peace and happiness.</div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">Wish #2</div>
+          <div class="flip-card-back">Success in all your future goals and pursuits.</div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">Wish #3</div>
+          <div class="flip-card-back">Keep smiling and bringing positive light everywhere.</div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">Wish #4</div>
+          <div class="flip-card-back">Have an unforgettable September 17 celebration!</div>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <!-- Section 3: Password Locked Gift Box -->
+  <div class="box hidden" id="lock-box">
+    <h3>🎁 Unlock the Final Note</h3>
+    <p style="font-size: 0.95rem; color: #666;">Enter the secret code (Hint: Birthday date <b>1709</b>):</p>
+    <input type="text" id="passcode" placeholder="Enter key..." />
+    <br>
+    <button class="btn" onclick="unlockBox()">Unlock Message 🔑</button>
     
-    <!-- Secret Message (Hidden by default) -->
-    <div id="message" class="hidden-message">
+    <div id="secret-message" class="hidden" style="margin-top: 20px; line-height: 1.6;">
       <p>Dear Sobana,</p>
-      <p>On this September 17th, I hope your day is as bright and wonderful as you are. May this coming year bring you clarity, fulfillment in everything you pursue, and genuine happiness.</p>
-      <p>Have the happiest of birthdays!</p>
+      <p>Happy Birthday! On this September 17th, I wish you nothing but clarity, strength, and genuine fulfillment in everything you do. May this year open wonderful new chapters for you!</p>
     </div>
   </div>
 
   <script>
-    // Set your secret unlock key here (case-insensitive)
-    const SECRET_KEY = "1709"; // You can change this to a date, word, or inside joke
+    // 10 Birthday Quiz Questions
+    const questions = [
+      { q: "1. What special date are we celebrating?", options: ["September 17", "August 10", "October 5"], correct: 0 },
+      { q: "2. What is the main goal for today?", options: ["To relax & smile", "To overwork", "To sleep all day"], correct: 0 },
+      { q: "3. Which season does September fall under in India?", options: ["Late Monsoon / Autumn", "Peak Summer", "Freezing Winter"], correct: 0 },
+      { q: "4. What color represents joy and positive warmth?", options: ["Yellow / Gold", "Grey", "Black"], correct: 0 },
+      { q: "5. What is the best way to start a new birthday year?", options: ["With positive energy", "With stress", "Ignoring it"], correct: 0 },
+      { q: "6. Which dessert is a birthday classic?", options: ["Cake & Ice Cream", "Plain Rice", "Salad"], correct: 0 },
+      { q: "7. How many days are in the month of September?", options: ["30 Days", "31 Days", "28 Days"], correct: 0 },
+      { q: "8. What should you make when blowing out birthday candles?", options: ["A meaningful wish", "A shopping list", "Nothing"], correct: 0 },
+      { q: "9. What brings genuine long-term success?", options: ["Consistency & Peace", "Rushing everything", "Pure luck"], correct: 0 },
+      { q: "10. Ready to unlock the rest of your birthday surprise?", options: ["Yes! Show me!", "Not yet"], correct: 0 }
+    ];
 
-    function unlockBox() {
-      const userEntry = document.getElementById('passcode').value.trim().toLowerCase();
-      const errorText = document.getElementById('error-text');
-      const lockForm = document.getElementById('lock-form');
-      const hiddenMsg = document.getElementById('message');
+    let currentQ = 0;
 
-      if (userEntry === SECRET_KEY.toLowerCase()) {
-        lockForm.style.display = 'none';
-        hiddenMsg.style.display = 'block';
+    function loadQuestion() {
+      if (currentQ < questions.length) {
+        document.getElementById('quiz-progress').innerText = `Question ${currentQ + 1} of 10`;
+        document.getElementById('quiz-question').innerText = questions[currentQ].q;
+        
+        const optsContainer = document.getElementById('quiz-options');
+        optsContainer.innerHTML = '';
+        
+        questions[currentQ].options.forEach((opt, index) => {
+          const btn = document.createElement('button');
+          btn.className = 'btn quiz-btn';
+          btn.innerText = opt;
+          btn.onclick = () => selectAnswer(index);
+          optsContainer.appendChild(btn);
+        });
       } else {
-        errorText.style.display = 'block';
+        // Quiz completed
+        document.getElementById('quiz-box').innerHTML = '<h3>🎉 Quiz Complete! 10/10!</h3><p>You unlocked the memory cards and final gift box below!</p>';
+        document.getElementById('cards-box').classList.remove('hidden');
+        document.getElementById('lock-box').classList.remove('hidden');
+        triggerConfetti();
       }
     }
 
-    // Countdown logic for September 17, 2026
-    const targetDate = new Date('September 17, 2026 00:00:00').getTime();
+    function selectAnswer(selectedIndex) {
+      const feedback = document.getElementById('quiz-feedback');
+      if (selectedIndex === questions[currentQ].correct) {
+        feedback.innerText = "Correct! ✨";
+        setTimeout(() => {
+          feedback.innerText = "";
+          currentQ++;
+          loadQuestion();
+        }, 600);
+      } else {
+        feedback.innerText = "Try again! 😉";
+      }
+    }
 
+    function unlockBox() {
+      const code = document.getElementById('passcode').value.trim();
+      if (code === "1709") {
+        document.getElementById('secret-message').classList.remove('hidden');
+        triggerConfetti();
+      } else {
+        alert("Incorrect code! Try 1709");
+      }
+    }
+
+    function triggerConfetti() {
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+    }
+
+    // Countdown Logic for Sept 17, 2026
+    const targetDate = new Date('September 17, 2026 00:00:00').getTime();
     function updateCountdown() {
       const now = new Date().getTime();
       const diff = targetDate - now;
-
       if (diff > 0) {
         document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
         document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         document.getElementById('minutes').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         document.getElementById('seconds').innerText = Math.floor((diff % (1000 * 60)) / 1000);
       } else {
-        document.querySelector('.countdown').innerHTML = "<h3>✨ It's September 17! Happy Birthday! ✨</h3>";
+        document.querySelector('.countdown').innerHTML = "<h3>✨ Happy Birthday Sobana! ✨</h3>";
       }
     }
     setInterval(updateCountdown, 1000);
     updateCountdown();
+    loadQuestion();
   </script>
 </body>
 </html>
