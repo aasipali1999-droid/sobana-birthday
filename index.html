@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+d<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -7,7 +7,7 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
@@ -78,11 +78,11 @@
     .progress-fill {
       height: 100%;
       background: var(--gold);
-      width: 14%;
+      width: 12%;
       transition: width 0.4s ease;
     }
 
-    /* Card Container */
+    /* Standard Card Container */
     .card {
       background: var(--surface);
       border: 1px solid var(--surface-border);
@@ -122,7 +122,7 @@
       margin-bottom: 22px;
     }
 
-    /* Buttons */
+    /* Choice Buttons */
     .choice-btn {
       width: 100%;
       background: rgba(255, 255, 255, 0.04);
@@ -321,6 +321,65 @@
       text-align: left;
     }
 
+    /* BALLOON POPPING MINI-GAME */
+    .balloon-cluster {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .balloon {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1.5px solid var(--surface-border);
+      border-radius: 20px;
+      padding: 24px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s;
+      user-select: none;
+      min-height: 125px;
+      text-align: center;
+    }
+
+    .balloon:active { transform: scale(0.92); }
+
+    .balloon-icon {
+      font-size: 2.5rem;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4));
+      transition: transform 0.2s;
+    }
+
+    .balloon.popped {
+      border-color: rgba(226, 180, 116, 0.4);
+      background: rgba(226, 180, 116, 0.06);
+    }
+
+    .balloon.popped .balloon-icon {
+      display: none;
+    }
+
+    .balloon-blessing {
+      display: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--gold);
+      line-height: 1.4;
+      animation: popText 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    .balloon.popped .balloon-blessing {
+      display: block;
+    }
+
+    @keyframes popText {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
     /* Astrology Comparison */
     .astro-grid {
       display: grid;
@@ -348,7 +407,7 @@
     .astro-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; }
     .astro-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
 
-    /* Scratch-Off Canvas */
+    /* Scratch-Off Card */
     .scratch-wrapper {
       position: relative;
       width: 100%;
@@ -383,7 +442,7 @@
       touch-action: none;
     }
 
-    /* LUCKY BIRTHDAY SLOT MACHINE */
+    /* Lucky Birthday Slot Machine */
     .slot-machine-box {
       background: rgba(0, 0, 0, 0.3);
       border: 2px solid rgba(226, 180, 116, 0.3);
@@ -431,6 +490,104 @@
       padding: 16px;
       margin-top: 15px;
       animation: slideFade 0.4s ease forwards;
+    }
+
+    /* VIP BOARDING PASS / GOLDEN TICKET */
+    .boarding-pass {
+      background: #fbf9f4;
+      color: #1a1816;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.6);
+      margin: 18px 0;
+      position: relative;
+    }
+
+    .pass-header {
+      background: #15181f;
+      color: #fff;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--gold);
+    }
+
+    .pass-airline {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .pass-body {
+      padding: 22px 20px;
+    }
+
+    .pass-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .pass-label {
+      font-size: 0.65rem;
+      color: #7d7871;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .pass-value {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #191816;
+      margin-top: 2px;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .pass-divider {
+      border: none;
+      border-top: 2px dashed #d1ccbf;
+      margin: 16px 0;
+      position: relative;
+    }
+
+    .pass-divider::before, .pass-divider::after {
+      content: '';
+      position: absolute;
+      top: -10px;
+      width: 20px;
+      height: 20px;
+      background: var(--surface);
+      border-radius: 50%;
+    }
+    .pass-divider::before { left: -30px; }
+    .pass-divider::after { right: -30px; }
+
+    .pass-barcode {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .barcode-lines {
+      height: 38px;
+      width: 85%;
+      background: repeating-linear-gradient(
+        to right,
+        #111,
+        #111 2px,
+        transparent 2px,
+        transparent 5px,
+        #111 5px,
+        #111 8px,
+        transparent 8px,
+        transparent 10px
+      );
     }
 
     /* Final Letter */
@@ -494,7 +651,7 @@
       text-decoration: none;
     }
 
-    /* Emergency Button */
+    /* Floating Panic Button */
     .panic-btn {
       position: fixed;
       bottom: 18px;
@@ -524,7 +681,7 @@
   <div class="app">
     <!-- Progress Indicator -->
     <div class="progress-bar-container">
-      <span class="step-indicator" id="stepIndicator">Stage 1 of 7</span>
+      <span class="step-indicator" id="stepIndicator">Stage 1 of 8</span>
       <div class="progress-track">
         <div class="progress-fill" id="progressFill"></div>
       </div>
@@ -624,11 +781,39 @@
         <div style="font-size:0.9rem;">🍰 <b>Immediate Remedy:</b> High-tier sweet treats & zero alarms.</div>
       </div>
 
-      <button class="btn-next" id="scanNextBtn" style="display:none;" onclick="goToStage(4)">View Planetary Analysis →</button>
+      <button class="btn-next" id="scanNextBtn" style="display:none;" onclick="goToStage(4)">Pop Birthday Balloons →</button>
     </div>
 
-    <!-- STAGE 4: ASTROLOGY COMPARISON -->
-    <div class="card" id="stage4" style="display:none;">
+    <!-- STAGE 4: BALLOON POPPING MINI-GAME -->
+    <div class="card" id="stage4" style="display:none; text-align:center;">
+      <span class="badge">Tactile Challenge</span>
+      <h2>Pop For Blessings</h2>
+      <p class="subtext">Tap each of the 4 balloons to pop them and collect your blessings:</p>
+
+      <div class="balloon-cluster">
+        <div class="balloon" onclick="popBalloon(this, '🌸 Unbreakable Peace & Clarity')">
+          <div class="balloon-icon">🎈</div>
+          <div class="balloon-blessing">🌸 Unbreakable Peace & Clarity</div>
+        </div>
+        <div class="balloon" onclick="popBalloon(this, '🍰 Zero-Calorie Sweet Treats')">
+          <div class="balloon-icon">🎈</div>
+          <div class="balloon-blessing">🍰 Zero-Calorie Sweet Treats</div>
+        </div>
+        <div class="balloon" onclick="popBalloon(this, '💫 Big Career Breakthroughs')">
+          <div class="balloon-icon">🎈</div>
+          <div class="balloon-blessing">💫 Big Career Breakthroughs</div>
+        </div>
+        <div class="balloon" onclick="popBalloon(this, '☕ 100% Stress Immunity')">
+          <div class="balloon-icon">🎈</div>
+          <div class="balloon-blessing">☕ 100% Stress Immunity</div>
+        </div>
+      </div>
+
+      <button class="btn-next" id="balloonNextBtn" style="display:none;" onclick="goToStage(5)">View Planetary Analysis →</button>
+    </div>
+
+    <!-- STAGE 5: ASTROLOGY COMPARISON -->
+    <div class="card" id="stage5" style="display:none;">
       <span class="badge">Astrological Audit</span>
       <h2>Dual Planetary Analysis</h2>
       <p class="subtext">Having two birthdays means navigating two conflicting astrological personalities:</p>
@@ -646,11 +831,11 @@
         </div>
       </div>
 
-      <button class="btn-next" onclick="goToStage(5)">Scratch Mystery Privilege →</button>
+      <button class="btn-next" onclick="goToStage(6)">Scratch Mystery Privilege →</button>
     </div>
 
-    <!-- STAGE 5: SCRATCH-OFF CARD -->
-    <div class="card" id="stage5" style="display:none; text-align:center;">
+    <!-- STAGE 6: SCRATCH-OFF CARD -->
+    <div class="card" id="stage6" style="display:none; text-align:center;">
       <span class="badge">Exclusive Perk</span>
       <h2>Scratch-Off Voucher</h2>
       <p class="subtext">Use your finger to scratch the card below to reveal your prize:</p>
@@ -665,11 +850,11 @@
       </div>
 
       <div id="scratchPrompt" style="font-size:0.8rem; color:var(--muted); min-height:18px;">Scratch at least 50% of the card ✨</div>
-      <button class="btn-next" id="scratchNextBtn" style="display:none;" onclick="goToStage(6)">Spin The Birthday Slot Machine →</button>
+      <button class="btn-next" id="scratchNextBtn" style="display:none;" onclick="goToStage(7)">Spin Birthday Slots →</button>
     </div>
 
-    <!-- STAGE 6: THE LUCKY BIRTHDAY SLOT MACHINE -->
-    <div class="card" id="stage6" style="display:none; text-align:center;">
+    <!-- STAGE 7: SLOT MACHINE -->
+    <div class="card" id="stage7" style="display:none; text-align:center;">
       <span class="badge">Cosmic Jackpot</span>
       <h2>The Birthday Slots</h2>
       <p class="subtext">Spin the reels to generate your official forecast for the year ahead:</p>
@@ -690,15 +875,72 @@
             🎉 JACKPOT COMBINATION CONFIRMED! 🎉
           </div>
           <p style="font-size:0.9rem; line-height:1.6; color:#fff;">
-            <b>The Cosmic Verdict:</b> A year packed with career breakthroughs, unbothered peace, unexpected good news, and lots of laughter.
+            <b>The Cosmic Verdict:</b> A year packed with career breakthroughs, unbothered peace, unexpected good news, and endless reasons to smile.
           </p>
-          <button class="btn-next" onclick="goToStage(7)">Read Personal Letter →</button>
+          <button class="btn-next" onclick="goToStage(8)">Claim VIP Boarding Pass →</button>
         </div>
       </div>
     </div>
 
-    <!-- STAGE 7: THE FINAL LETTER + WHATSAPP -->
-    <div id="stage7" style="display:none;">
+    <!-- STAGE 8: FIRST CLASS VIP BOARDING PASS -->
+    <div class="card" id="stage8" style="display:none; text-align:center;">
+      <span class="badge">Flight To The Next Year</span>
+      <h2>Your Boarding Pass</h2>
+      <p class="subtext">Official boarding authorization for the year ahead (take a screenshot!):</p>
+
+      <div class="boarding-pass">
+        <div class="pass-header">
+          <div class="pass-airline">CELEBRATION AIRWAYS</div>
+          <div style="font-size:0.75rem; font-weight:700; color:#fff;">FIRST CLASS</div>
+        </div>
+        <div class="pass-body">
+          <div class="pass-grid">
+            <div style="text-align:left;">
+              <div class="pass-label">Passenger</div>
+              <div class="pass-value">SOBANA</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="pass-label">Flight</div>
+              <div class="pass-value">BDAY-1718</div>
+            </div>
+          </div>
+
+          <div class="pass-grid">
+            <div style="text-align:left;">
+              <div class="pass-label">Departure</div>
+              <div class="pass-value" style="font-size:0.85rem;">SEP 17 (ENG)</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="pass-label">Destination</div>
+              <div class="pass-value" style="font-size:0.85rem;">SEP 18 (TAMIL)</div>
+            </div>
+          </div>
+
+          <div class="pass-grid" style="margin-bottom:0;">
+            <div style="text-align:left;">
+              <div class="pass-label">Seat / Status</div>
+              <div class="pass-value">01A / ROYAL</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="pass-label">Gate</div>
+              <div class="pass-value">HAPPINESS</div>
+            </div>
+          </div>
+
+          <hr class="pass-divider">
+
+          <div class="pass-barcode">
+            <div class="barcode-lines"></div>
+            <div style="font-family:'Space Mono', monospace; font-size:0.65rem; color:#888;">* SOBANA-2026-BDAY-VIP *</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-next" onclick="goToStage(9)">Read Personal Letter →</button>
+    </div>
+
+    <!-- STAGE 9: FINAL LETTER + WHATSAPP -->
+    <div id="stage9" style="display:none;">
       <div class="paper">
         <div class="stamp">SEP 17-18</div>
         <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:1.5px; color:#888;">Personal Edition</div>
@@ -715,7 +957,7 @@
 
         <div class="signature">— Best wishes, always ✨</div>
 
-        <a class="btn-wa" href="https://wa.me/?text=I%20have%20completed%20the%20birthday%20experience%20and%20officially%20hit%20the%20jackpot!%20%F0%9F%8E%B0%F0%9F%91%91%E2%9C%A8" target="_blank">
+        <a class="btn-wa" href="https://wa.me/?text=I%20have%20completed%20the%20birthday%20experience%2C%20popped%20all%20balloons%2C%20and%20officially%20claimed%20my%20First-Class%20Boarding%20Pass!%20%F0%9F%8E%AB%F0%9F%91%91%E2%9C%A8" target="_blank">
           Send Reaction via WhatsApp 💬
         </a>
       </div>
@@ -723,7 +965,7 @@
 
   </div>
 
-  <!-- FLOATING 'DO NOT PRESS' EMERGENCY BUTTON -->
+  <!-- FLOATING PANIC BUTTON -->
   <button class="panic-btn" onclick="pressSecret()">⚠️ Do Not Press</button>
 
   <audio id="ambientTrack" loop src="https://assets.mixkit.co/music/preview/mixkit-serene-view-443.mp3"></audio>
@@ -735,17 +977,17 @@
     }
 
     function goToStage(stageNum) {
-      document.querySelectorAll('.app > .card, .app > #stage7').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.app > .card, .app > #stage9').forEach(el => el.style.display = 'none');
       const target = document.getElementById(`stage${stageNum}`);
       if (target) target.style.display = 'block';
-      setProgress(stageNum, 7);
+      setProgress(stageNum, 9);
 
-      if (stageNum === 5) initScratchCard();
+      if (stageNum === 6) initScratchCard();
 
-      if (stageNum === 7) {
+      if (stageNum === 9) {
         confetti({
-          particleCount: 90,
-          spread: 80,
+          particleCount: 95,
+          spread: 85,
           colors: ['#e2b474', '#ffffff', '#e07a5f'],
           origin: { y: 0.6 }
         });
@@ -850,6 +1092,19 @@
       }
     }
 
+    // BALLOON POPPING
+    let poppedCount = 0;
+    function popBalloon(elem, text) {
+      if (!elem.classList.contains('popped')) {
+        elem.classList.add('popped');
+        poppedCount++;
+        confetti({ particleCount: 30, spread: 50, origin: { y: 0.6 } });
+        if (poppedCount >= 4) {
+          document.getElementById('balloonNextBtn').style.display = 'block';
+        }
+      }
+    }
+
     // SCRATCH-OFF CARD CANVAS
     let scratchInitialized = false;
     function initScratchCard() {
@@ -896,7 +1151,7 @@
       canvas.addEventListener('touchmove', scratch);
     }
 
-    // STAGE 6: SLOT MACHINE LOGIC
+    // SLOT MACHINE LOGIC
     const icons = ['🌸', '🍰', '☕', '💎', '🎉', '🌟', '👑', '🎂'];
     let isSpinning = false;
 
@@ -927,7 +1182,6 @@
           r2.classList.remove('spinning');
           r3.classList.remove('spinning');
 
-          // Guaranteed Winner Combo
           r1.innerText = '👑';
           r2.innerText = '🎂';
           r3.innerText = '✨';
@@ -941,7 +1195,7 @@
       }, 100);
     }
 
-    // EMERGENCY BUTTON BANTER
+    // PANIC BUTTON BANTER
     let secretCount = 0;
     const banter = [
       "⚠️ Why did you press that?!",
