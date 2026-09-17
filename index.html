@@ -3,541 +3,465 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Happy Birthday Sobana ✨</title>
+  <title>Sobana · A Personal Note</title>
+  
+  <!-- Modern Clean Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
     :root {
-      --primary: #ff4b8b;
-      --primary-dark: #e02868;
-      --accent: #ffd166;
-      --bg-dark: #0f0c20;
-      --glass-bg: rgba(255, 255, 255, 0.08);
-      --glass-border: rgba(255, 255, 255, 0.18);
-      --card-radius: 28px;
+      --bg: #0c0d0e;
+      --card-bg: #16181a;
+      --border: rgba(255, 255, 255, 0.08);
+      --text-main: #f2f2f3;
+      --text-muted: #8a8f98;
+      --accent-gold: #e2b87e;
+      --accent-soft: #f7e6d0;
+      --paper: #fbf9f5;
+      --paper-text: #262422;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-font-smoothing: antialiased;
       -webkit-tap-highlight-color: transparent;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     body {
-      background: var(--bg-dark);
-      color: #fff;
+      background-color: var(--bg);
+      color: var(--text-main);
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      justify-content: flex-start;
-      padding: 24px 16px 80px;
+      padding: 20px 16px;
       overflow-x: hidden;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       position: relative;
     }
 
-    /* Ambient Glowing Orbs */
-    .orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(80px);
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0.45;
-    }
-    .orb-1 { width: 300px; height: 300px; background: #ff2a7a; top: -60px; left: -80px; }
-    .orb-2 { width: 280px; height: 280px; background: #7928ca; bottom: 80px; right: -70px; }
-
-    .app-shell {
+    /* ---------------- LOCK SCREEN ---------------- */
+    #lockScreen {
       width: 100%;
-      max-width: 440px;
-      z-index: 1;
       display: flex;
       flex-direction: column;
-      gap: 20px;
-    }
-
-    /* Glass Panels */
-    .glass-card {
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--card-radius);
-      padding: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+      align-items: center;
       text-align: center;
+      padding: 30px 10px;
     }
 
-    .header-tag {
-      font-size: 0.75rem;
-      letter-spacing: 2.5px;
+    .badge {
+      font-size: 0.72rem;
       text-transform: uppercase;
-      color: var(--accent);
-      font-weight: 700;
-      margin-bottom: 8px;
-      display: inline-block;
+      letter-spacing: 2px;
+      color: var(--accent-gold);
+      background: rgba(226, 184, 126, 0.08);
+      border: 1px solid rgba(226, 184, 126, 0.2);
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+      font-weight: 500;
     }
 
-    h1 {
+    .lock-title {
       font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
-      font-weight: 600;
-      line-height: 1.2;
-      background: linear-gradient(135deg, #ffffff 40%, #ffb6c1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 6px;
+      font-size: 1.85rem;
+      font-weight: 500;
+      letter-spacing: -0.5px;
+      color: var(--text-main);
+      margin-bottom: 8px;
     }
 
-    .subtext {
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.7);
+    .lock-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 36px;
     }
 
-    /* Countdown Grid */
-    .countdown-grid {
+    /* Passcode Dots */
+    .pin-display {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .pin-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      transition: all 0.2s ease;
+    }
+
+    .pin-dot.filled {
+      background-color: var(--accent-gold);
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 10px rgba(226, 184, 126, 0.4);
+    }
+
+    /* Keypad Grid */
+    .keypad {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-top: 18px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      width: 100%;
+      max-width: 280px;
     }
 
-    .timer-tile {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 18px;
-      padding: 12px 6px;
+    .key-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 72px;
+      height: 72px;
+      margin: 0 auto;
       display: flex;
       flex-direction: column;
       align-items: center;
-    }
-
-    .timer-val {
+      justify-content: center;
       font-size: 1.5rem;
-      font-weight: 800;
-      color: #fff;
-    }
-
-    .timer-lbl {
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: rgba(255, 255, 255, 0.5);
-      margin-top: 2px;
-    }
-
-    /* Interactive 3D Gift Box */
-    .gift-interactive {
-      position: relative;
-      width: 100px;
-      height: 100px;
-      margin: 10px auto 20px;
+      font-weight: 400;
+      color: var(--text-main);
       cursor: pointer;
+      user-select: none;
+      transition: all 0.15s ease;
     }
 
-    .gift-box {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 4rem;
-      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    .gift-box:active {
+    .key-btn:active {
       transform: scale(0.92);
+      background: rgba(255, 255, 255, 0.08);
     }
 
-    .gift-box.shake {
-      animation: shake 0.5s ease;
+    .key-sub {
+      font-size: 0.55rem;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+      margin-top: 1px;
     }
 
-    @keyframes shake {
-      0%, 100% { transform: rotate(0deg); }
-      20% { transform: rotate(-10deg) scale(1.05); }
-      40% { transform: rotate(10deg) scale(1.05); }
-      60% { transform: rotate(-8deg); }
-      80% { transform: rotate(8deg); }
-    }
-
-    /* PIN Inputs */
-    .pin-container {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin: 18px 0;
-    }
-
-    .pin-input {
-      width: 50px;
-      height: 56px;
-      border-radius: 14px;
-      border: 1.5px solid rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.06);
-      color: #fff;
-      font-size: 1.6rem;
-      font-weight: 700;
-      text-align: center;
-      outline: none;
-      transition: all 0.25s;
-    }
-
-    .pin-input:focus {
-      border-color: var(--primary);
-      background: rgba(255, 75, 139, 0.15);
-      box-shadow: 0 0 15px rgba(255, 75, 139, 0.4);
-    }
-
-    .btn-unlock {
-      width: 100%;
-      padding: 16px;
+    .key-btn.action {
+      background: transparent;
       border: none;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #ff4b8b, #ff758c);
-      color: #fff;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 8px 24px rgba(255, 75, 139, 0.4);
-      transition: transform 0.2s, box-shadow 0.2s;
+      font-size: 0.85rem;
+      color: var(--text-muted);
     }
 
-    .btn-unlock:active {
-      transform: scale(0.98);
-      box-shadow: 0 4px 12px rgba(255, 75, 139, 0.3);
-    }
-
-    .error-hint {
-      color: #ff5e7e;
+    .error-text {
       font-size: 0.8rem;
-      margin-top: 10px;
-      display: none;
+      color: #ff6b6b;
+      margin-top: 18px;
+      min-height: 18px;
+      font-weight: 400;
     }
 
-    /* Surprise Content (Hidden initially) */
-    #surpriseArea {
+    /* ---------------- UNLOCKED EXPERIENCE ---------------- */
+    #mainExperience {
       display: none;
-      animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      width: 100%;
+      animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(30px); }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* 3D Flip Card */
-    .flip-card-container {
-      perspective: 1000px;
-      width: 100%;
-      height: 260px;
-      margin-top: 15px;
-      cursor: pointer;
-    }
-
-    .flip-card-inner {
+    /* Real Paper Letter styling */
+    .letter-paper {
+      background: var(--paper);
+      color: var(--paper-text);
+      border-radius: 12px;
+      padding: 36px 28px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
       position: relative;
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      transform-style: preserve-3d;
+      margin-bottom: 24px;
     }
 
-    .flip-card-inner.flipped {
-      transform: rotateY(180deg);
-    }
-
-    .flip-front, .flip-back {
+    .stamp {
       position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 20px;
-      padding: 24px;
+      top: 24px;
+      right: 24px;
+      width: 48px;
+      height: 48px;
+      border: 1px dashed rgba(0, 0, 0, 0.2);
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 0.65rem;
+      letter-spacing: 1px;
+      color: #928e88;
+      text-transform: uppercase;
+      transform: rotate(6deg);
     }
 
-    .flip-front {
-      background: linear-gradient(135deg, rgba(255, 75, 139, 0.2), rgba(121, 40, 202, 0.2));
+    .date-label {
+      font-size: 0.75rem;
+      color: #797570;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
     }
 
-    .flip-back {
-      background: linear-gradient(135deg, #1f1a3a, #110e24);
-      transform: rotateY(180deg);
-      border-color: rgba(255, 209, 102, 0.3);
-    }
-
-    .letter-title {
+    .salutation {
       font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      color: var(--accent);
-      margin-bottom: 12px;
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 18px;
+      color: #191817;
     }
 
     .letter-body {
-      font-size: 0.95rem;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, 0.9);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #3b3734;
+      margin-bottom: 24px;
     }
 
-    /* Bottom Ambient Music Bar */
-    .music-bar {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 32px);
-      max-width: 440px;
-      background: rgba(20, 16, 40, 0.75);
-      backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 20px;
-      padding: 10px 18px;
+    .signature {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: #191817;
+      text-align: right;
+    }
+
+    /* Minimal Audio Player */
+    .spotify-track-card {
+      background: #121315;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      z-index: 10;
+      width: 100%;
     }
 
-    .music-info {
+    .track-meta {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
     }
 
-    .disc-icon {
-      font-size: 1.5rem;
-      animation: spin 4s linear infinite;
-      animation-play-state: paused;
+    .album-art {
+      width: 44px;
+      height: 44px;
+      background: #25282c;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--accent-gold);
     }
 
-    .disc-icon.playing {
-      animation-play-state: running;
-    }
-
-    @keyframes spin {
-      100% { transform: rotate(360deg); }
-    }
-
-    .music-btn {
-      background: rgba(255, 255, 255, 0.12);
-      border: none;
+    .track-title {
+      font-size: 0.9rem;
+      font-weight: 500;
       color: #fff;
-      padding: 8px 14px;
-      border-radius: 12px;
-      font-size: 0.85rem;
-      font-weight: 600;
+    }
+
+    .track-artist {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .play-btn {
+      width: 38px;
+      height: 38px;
+      background: #fff;
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
+      transition: transform 0.15s;
+    }
+
+    .play-btn:active {
+      transform: scale(0.92);
     }
   </style>
 </head>
 <body>
 
-  <!-- Background Orbs -->
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
+  <div class="wrapper">
+    
+    <!-- AUTHENTIC PASSCODE SCREEN -->
+    <div id="lockScreen">
+      <div class="badge">Private Note</div>
+      <h1 class="lock-title">Enter Passcode</h1>
+      <p class="lock-subtitle">This space is locked for Sobana.<br>Enter the 4-digit key to view.</p>
 
-  <div class="app-shell">
-    <!-- Header & Countdown Card -->
-    <div class="glass-card">
-      <span class="header-tag">Special Celebration</span>
-      <h1>Happy Birthday, Sobana! 🌸</h1>
-      <p class="subtext">A tiny corner on the web made just for you.</p>
-
-      <div class="countdown-grid" id="timerGrid">
-        <div class="timer-tile">
-          <span class="timer-val" id="days">00</span>
-          <span class="timer-lbl">Days</span>
-        </div>
-        <div class="timer-tile">
-          <span class="timer-val" id="hours">00</span>
-          <span class="timer-lbl">Hours</span>
-        </div>
-        <div class="timer-tile">
-          <span class="timer-val" id="mins">00</span>
-          <span class="timer-lbl">Mins</span>
-        </div>
-        <div class="timer-tile">
-          <span class="timer-val" id="secs">00</span>
-          <span class="timer-lbl">Secs</span>
-        </div>
+      <div class="pin-display">
+        <div class="pin-dot" id="dot0"></div>
+        <div class="pin-dot" id="dot1"></div>
+        <div class="pin-dot" id="dot2"></div>
+        <div class="pin-dot" id="dot3"></div>
       </div>
+
+      <div class="keypad">
+        <div class="key-btn" onclick="enterDigit('1')">1</div>
+        <div class="key-btn" onclick="enterDigit('2')">2<span class="key-sub">ABC</span></div>
+        <div class="key-btn" onclick="enterDigit('3')">3<span class="key-sub">DEF</span></div>
+        <div class="key-btn" onclick="enterDigit('4')">4<span class="key-sub">GHI</span></div>
+        <div class="key-btn" onclick="enterDigit('5')">5<span class="key-sub">JKL</span></div>
+        <div class="key-btn" onclick="enterDigit('6')">6<span class="key-sub">MNO</span></div>
+        <div class="key-btn" onclick="enterDigit('7')">7<span class="key-sub">PQRS</span></div>
+        <div class="key-btn" onclick="enterDigit('8')">8<span class="key-sub">TUV</span></div>
+        <div class="key-btn" onclick="enterDigit('9')">9<span class="key-sub">WXYZ</span></div>
+        <div class="key-btn action" onclick="clearPin()">Clear</div>
+        <div class="key-btn" onclick="enterDigit('0')">0</div>
+        <div class="key-btn action" onclick="deleteDigit()">⌫</div>
+      </div>
+
+      <div class="error-text" id="errorMessage"></div>
     </div>
 
-    <!-- Lock Card -->
-    <div class="glass-card" id="lockCard">
-      <div class="gift-interactive" onclick="wiggleGift()">
-        <div class="gift-box" id="giftBox">🎁</div>
+    <!-- MAIN UNLOCKED EXPERIENCE -->
+    <div id="mainExperience">
+      
+      <!-- Authentic Paper Note -->
+      <div class="letter-paper">
+        <div class="stamp">SEP 17</div>
+        <div class="date-label">September 17 · Special Edition</div>
+        
+        <div class="salutation">Happy Birthday, Sobana.</div>
+        
+        <div class="letter-body">
+          Some years feel like chapters, but moments like today are the milestones worth pausing for. 
+          <br><br>
+          Wishing you clarity in everything you pursue, peace of mind, genuine laughter with the people who matter, and a year ahead that surprises you in the most beautiful ways.
+        </div>
+
+        <div class="signature">— Best wishes, always</div>
       </div>
-      <h2 style="font-size: 1.3rem; margin-bottom: 6px;">Unlock Your Surprise</h2>
-      <p class="subtext">Enter the 4-digit secret key (Hint: DDMM)</p>
 
-      <!-- Auto-Advancing Numeric Inputs -->
-      <div class="pin-container">
-        <input type="tel" maxlength="1" class="pin-input" inputmode="numeric" autofocus />
-        <input type="tel" maxlength="1" class="pin-input" inputmode="numeric" />
-        <input type="tel" maxlength="1" class="pin-input" inputmode="numeric" />
-        <input type="tel" maxlength="1" class="pin-input" inputmode="numeric" />
-      </div>
-
-      <button class="btn-unlock" onclick="verifyPin()">Open Mystery Box ✨</button>
-      <div class="error-hint" id="errorHint">Incorrect PIN. Try Sobana's birth date!</div>
-    </div>
-
-    <!-- Hidden Surprise Section -->
-    <div id="surpriseArea" class="glass-card">
-      <span class="header-tag" style="color: #4ade80;">Unlocked 🎉</span>
-      <h2 style="font-size: 1.5rem; margin-bottom: 10px;">A Special Letter</h2>
-      <p class="subtext">Tap the card below to read:</p>
-
-      <!-- Flip Card -->
-      <div class="flip-card-container" onclick="toggleFlip(this)">
-        <div class="flip-card-inner">
-          <div class="flip-front">
-            <span style="font-size: 3rem; margin-bottom: 10px;">💌</span>
-            <h3 style="font-size: 1.1rem; color: #fff;">Private Message</h3>
-            <p style="font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-top: 4px;">(Tap to flip)</p>
-          </div>
-          <div class="flip-back">
-            <h3 class="letter-title">Dear Sobana,</h3>
-            <p class="letter-body">
-              Wishing you a wonderful year filled with genuine smiles, endless good health, and success in everything you chase. May every moment today be as special as you are! 🎂✨
-            </p>
+      <!-- Minimal Audio Player -->
+      <div class="spotify-track-card">
+        <div class="track-meta">
+          <div class="album-art">♪</div>
+          <div>
+            <div class="track-title">Peaceful Reflections</div>
+            <div class="track-artist">Curated for Sobana</div>
           </div>
         </div>
+        <button class="play-btn" id="audioCtrl" onclick="togglePlayback()">
+          <svg id="playIcon" width="14" height="14" viewBox="0 0 24 24" fill="#000">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+        </button>
       </div>
+
     </div>
+
   </div>
 
-  <!-- Ambient Audio Floating Bar -->
-  <div class="music-bar">
-    <div class="music-info">
-      <div class="disc-icon" id="discIcon">🎵</div>
-      <div>
-        <div style="font-size: 0.85rem; font-weight: 700;">Birthday Beats</div>
-        <div style="font-size: 0.7rem; color: rgba(255,255,255,0.6);">Background audio</div>
-      </div>
-    </div>
-    <button class="music-btn" id="playBtn" onclick="toggleAudio()">Play ▶</button>
-  </div>
-
-  <!-- Audio Element (Replace src with your song URL or keep royalty-free audio) -->
-  <audio id="bgAudio" loop src="https://assets.mixkit.co/music/preview/mixkit-serene-view-443.mp3"></audio>
+  <audio id="ambientSound" loop src="https://assets.mixkit.co/music/preview/mixkit-serene-view-443.mp3"></audio>
 
   <script>
-    // --- Mobile PIN Auto-Focus Handler ---
-    const pins = document.querySelectorAll('.pin-input');
-    pins.forEach((input, index) => {
-      input.addEventListener('input', (e) => {
-        if (input.value.length === 1 && index < pins.length - 1) {
-          pins[index + 1].focus();
+    let currentCode = "";
+    const correctCode = "1709";
+
+    function enterDigit(digit) {
+      if (currentCode.length < 4) {
+        currentCode += digit;
+        updateDots();
+        if (currentCode.length === 4) {
+          setTimeout(validatePin, 150);
         }
-        if (index === pins.length - 1 && input.value.length === 1) {
-          verifyPin();
-        }
-      });
-
-      input.addEventListener('keydown', (e) => {
-        if (e.key === 'Backspace' && !input.value && index > 0) {
-          pins[index - 1].focus();
-        }
-      });
-    });
-
-    function wiggleGift() {
-      const box = document.getElementById('giftBox');
-      box.classList.add('shake');
-      setTimeout(() => box.classList.remove('shake'), 500);
-    }
-
-    // --- Unlock & Confetti Celebration ---
-    function verifyPin() {
-      let enteredCode = '';
-      pins.forEach(pin => enteredCode += pin.value);
-
-      if (enteredCode === "1709") {
-        document.getElementById('errorHint').style.display = 'none';
-        
-        // Blast Confetti
-        launchCelebration();
-
-        // Reveal animation
-        document.getElementById('lockCard').style.display = 'none';
-        const surprise = document.getElementById('surpriseArea');
-        surprise.style.display = 'block';
-
-        // Autoplay music on user action (browsers allow it on tap)
-        const audio = document.getElementById('bgAudio');
-        audio.play().then(() => {
-          document.getElementById('playBtn').innerText = 'Pause ⏸';
-          document.getElementById('discIcon').classList.add('playing');
-        }).catch(() => {});
-      } else {
-        document.getElementById('errorHint').style.display = 'block';
-        wiggleGift();
       }
     }
 
-    function toggleFlip(elem) {
-      elem.querySelector('.flip-card-inner').classList.toggle('flipped');
+    function deleteDigit() {
+      if (currentCode.length > 0) {
+        currentCode = currentCode.slice(0, -1);
+        updateDots();
+        clearError();
+      }
     }
 
-    function launchCelebration() {
-      confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
-      setTimeout(() => {
-        confetti({ particleCount: 50, angle: 60, spread: 55, origin: { x: 0 } });
-        confetti({ particleCount: 50, angle: 120, spread: 55, origin: { x: 1 } });
-      }, 250);
+    function clearPin() {
+      currentCode = "";
+      updateDots();
+      clearError();
     }
 
-    // --- Audio Toggle ---
-    function toggleAudio() {
-      const audio = document.getElementById('bgAudio');
-      const btn = document.getElementById('playBtn');
-      const disc = document.getElementById('discIcon');
+    function updateDots() {
+      for (let i = 0; i < 4; i++) {
+        const dot = document.getElementById(`dot${i}`);
+        if (i < currentCode.length) {
+          dot.classList.add('filled');
+        } else {
+          dot.classList.remove('filled');
+        }
+      }
+    }
 
+    function clearError() {
+      document.getElementById('errorMessage').innerText = "";
+    }
+
+    function validatePin() {
+      if (currentCode === correctCode) {
+        // Classy discreet gold confetti
+        confetti({
+          particleCount: 55,
+          spread: 60,
+          colors: ['#e2b87e', '#ffffff', '#c5a059'],
+          origin: { y: 0.7 }
+        });
+
+        document.getElementById('lockScreen').style.display = 'none';
+        document.getElementById('mainExperience').style.display = 'block';
+
+        // Start subtle audio playback
+        const audio = document.getElementById('ambientSound');
+        audio.play().then(() => updatePlayIcon(true)).catch(() => {});
+      } else {
+        document.getElementById('errorMessage').innerText = "Incorrect passcode";
+        setTimeout(() => {
+          clearPin();
+        }, 500);
+      }
+    }
+
+    function togglePlayback() {
+      const audio = document.getElementById('ambientSound');
       if (audio.paused) {
         audio.play();
-        btn.innerText = 'Pause ⏸';
-        disc.classList.add('playing');
+        updatePlayIcon(true);
       } else {
         audio.pause();
-        btn.innerText = 'Play ▶';
-        disc.classList.remove('playing');
+        updatePlayIcon(false);
       }
     }
 
-    // --- Countdown Timer ---
-    const currentYear = new Date().getFullYear();
-    let target = new Date(`Sep 17, ${currentYear} 00:00:00`).getTime();
-    if (new Date().getTime() > target) {
-      target = new Date(`Sep 17, ${currentYear + 1} 00:00:00`).getTime();
-    }
-
-    setInterval(() => {
-      const diff = target - new Date().getTime();
-      if (diff <= 0) {
-        document.getElementById('timerGrid').innerHTML = "<div style='grid-column: span 4; font-weight:700; color:var(--accent);'>🎉 Today is the Special Day! 🎂</div>";
-        return;
+    function updatePlayIcon(isPlaying) {
+      const icon = document.getElementById('playIcon');
+      if (isPlaying) {
+        icon.innerHTML = '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>';
+      } else {
+        icon.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
       }
-      document.getElementById('days').innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
-      document.getElementById('hours').innerText = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2, '0');
-      document.getElementById('mins').innerText = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(2, '0');
-      document.getElementById('secs').innerText = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
-    }, 1000);
+    }
   </script>
 </body>
 </html>
