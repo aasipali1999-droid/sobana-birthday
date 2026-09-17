@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Sobana · The 48-Hour Birthday Experience</title>
+  <title>Happy Birthday Sobana ✨</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -122,7 +122,7 @@
       margin-bottom: 22px;
     }
 
-    /* Choice Buttons */
+    /* Buttons */
     .choice-btn {
       width: 100%;
       background: rgba(255, 255, 255, 0.04);
@@ -220,7 +220,7 @@
     .key:active { transform: scale(0.92); background: rgba(255,255,255,0.1); }
     .key.action { background: transparent; border: none; font-size: 0.85rem; color: var(--muted); }
 
-    /* CANDLE BLOWOUT */
+    /* Candle Component */
     .candle-container {
       display: flex;
       flex-direction: column;
@@ -265,7 +265,7 @@
       100% { transform: scale(1.06) rotate(1deg); }
     }
 
-    /* BIOMETRIC AURA SCANNER */
+    /* Biometric Aura Scanner */
     .scanner-pad {
       position: relative;
       width: 120px;
@@ -288,7 +288,6 @@
       fill: none;
       stroke: var(--gold);
       stroke-width: 1.5;
-      transition: opacity 0.3s;
     }
 
     .laser-line {
@@ -322,7 +321,7 @@
       text-align: left;
     }
 
-    /* ASTROLOGY COMPARISON */
+    /* Astrology Comparison */
     .astro-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -349,7 +348,7 @@
     .astro-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; }
     .astro-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
 
-    /* SCRATCH-OFF CANVAS */
+    /* Scratch-Off Canvas */
     .scratch-wrapper {
       position: relative;
       width: 100%;
@@ -384,39 +383,57 @@
       touch-action: none;
     }
 
-    /* VIP RULES */
-    .rule-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 14px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--surface-border);
-      border-radius: 14px;
-      margin-bottom: 10px;
-      cursor: pointer;
+    /* LUCKY BIRTHDAY SLOT MACHINE */
+    .slot-machine-box {
+      background: rgba(0, 0, 0, 0.3);
+      border: 2px solid rgba(226, 180, 116, 0.3);
+      border-radius: 20px;
+      padding: 22px 14px;
+      margin: 18px 0;
+      text-align: center;
     }
 
-    .rule-checkbox {
-      width: 22px;
-      height: 22px;
-      border-radius: 6px;
-      border: 1.5px solid rgba(255, 255, 255, 0.3);
+    .reels-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .reel {
+      width: 80px;
+      height: 90px;
+      background: #0f1218;
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.8rem;
-      flex-shrink: 0;
-      margin-top: 2px;
+      font-size: 2.4rem;
+      box-shadow: inset 0 4px 10px rgba(0,0,0,0.6);
+      transition: transform 0.1s ease;
     }
 
-    .rule-item.checked .rule-checkbox {
-      background: var(--gold);
-      border-color: var(--gold);
-      color: #121316;
+    .reel.spinning {
+      animation: reelBounce 0.2s infinite alternate;
     }
 
-    /* LETTER & WHATSAPP */
+    @keyframes reelBounce {
+      0% { transform: translateY(-3px); }
+      100% { transform: translateY(3px); }
+    }
+
+    .slot-result-box {
+      display: none;
+      background: rgba(226, 180, 116, 0.08);
+      border: 1px solid rgba(226, 180, 116, 0.25);
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 15px;
+      animation: slideFade 0.4s ease forwards;
+    }
+
+    /* Final Letter */
     .paper {
       background: var(--paper);
       color: var(--paper-ink);
@@ -477,7 +494,7 @@
       text-decoration: none;
     }
 
-    /* FLOATING EMERGENCY BUTTON */
+    /* Emergency Button */
     .panic-btn {
       position: fixed;
       bottom: 18px;
@@ -531,7 +548,7 @@
 
       <button class="choice-btn" onclick="startKeypad('both')" style="border-color: rgba(226, 180, 116, 0.4);">
         <span>👑 Both 17th & 18th!</span>
-        <span class="tag-sm" style="color:var(--gold);">48-Hr VIP Mode</span>
+        <span class="tag-sm" style="color:var(--gold);">Double Celebration</span>
       </button>
     </div>
 
@@ -570,7 +587,7 @@
     <div class="card" id="stage2" style="display:none; text-align:center;">
       <span class="badge">Mandatory Ritual</span>
       <h2>Make A Silent Wish</h2>
-      <p class="subtext">Before proceeding into the VIP zone, tap the flame to blow out the candle.</p>
+      <p class="subtext">Before proceeding further, tap the flame to blow out the candle.</p>
 
       <div class="candle-container" onclick="blowCandle()">
         <div class="flame" id="candleFlame"></div>
@@ -582,7 +599,7 @@
       <button class="btn-next" id="candleNextBtn" style="display:none;" onclick="goToStage(3)">Calibrate Biometrics →</button>
     </div>
 
-    <!-- STAGE 3: BIOMETRIC THUMBPRINT SCANNER -->
+    <!-- STAGE 3: BIOMETRIC SCANNER -->
     <div class="card" id="stage3" style="display:none; text-align:center;">
       <span class="badge">Biometric Diagnostic</span>
       <h2>Birthday Aura Scan</h2>
@@ -602,15 +619,15 @@
 
       <div class="aura-stats" id="auraStats">
         <div style="font-size:0.75rem; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:8px;">Scan Results:</div>
-        <div style="font-size:0.9rem; margin-bottom:4px;">✨ <b>Royalty Level:</b> 98.4% (Critical Maximum)</div>
+        <div style="font-size:0.9rem; margin-bottom:4px;">✨ <b>Birthday Energy:</b> 99.8% (Off The Charts)</div>
         <div style="font-size:0.9rem; margin-bottom:4px;">🎂 <b>Patience for Stress:</b> 0.0%</div>
-        <div style="font-size:0.9rem;">🍰 <b>Requirement:</b> Immediate dessert & VIP treatment.</div>
+        <div style="font-size:0.9rem;">🍰 <b>Immediate Remedy:</b> High-tier sweet treats & zero alarms.</div>
       </div>
 
       <button class="btn-next" id="scanNextBtn" style="display:none;" onclick="goToStage(4)">View Planetary Analysis →</button>
     </div>
 
-    <!-- STAGE 4: TAMIL VS ENGLISH ASTROLOGY -->
+    <!-- STAGE 4: ASTROLOGY COMPARISON -->
     <div class="card" id="stage4" style="display:none;">
       <span class="badge">Astrological Audit</span>
       <h2>Dual Planetary Analysis</h2>
@@ -625,7 +642,7 @@
         <div class="astro-card">
           <div class="astro-tag">Tamil (Sept 18)</div>
           <div class="astro-title">Traditional Royalty</div>
-          <div class="astro-desc">Wants full VIP treatment, zero unsolicited advice, and an afternoon nap.</div>
+          <div class="astro-desc">Wants full relaxation, zero unsolicited advice, and an afternoon nap.</div>
         </div>
       </div>
 
@@ -636,52 +653,48 @@
     <div class="card" id="stage5" style="display:none; text-align:center;">
       <span class="badge">Exclusive Perk</span>
       <h2>Scratch-Off Voucher</h2>
-      <p class="subtext">Use your finger to scratch the gold silver card below to reveal your prize:</p>
+      <p class="subtext">Use your finger to scratch the card below to reveal your prize:</p>
 
       <div class="scratch-wrapper">
         <div class="scratch-reward">
           <div style="font-size:1.8rem; margin-bottom:6px;">🎁</div>
           <h3 style="font-size:1.05rem; color:var(--gold); margin-bottom:4px;">LIFETIME BIRTHDAY PASS</h3>
-          <p style="font-size:0.75rem; color:#ccc;">Valid for: 1 Free Dinner / Coffee of Choice + Zero Questions Asked.</p>
+          <p style="font-size:0.75rem; color:#ccc;">Valid for: 1 Free Meal / Coffee of Choice + Zero Questions Asked.</p>
         </div>
         <canvas id="scratchCanvas" width="380" height="160"></canvas>
       </div>
 
       <div id="scratchPrompt" style="font-size:0.8rem; color:var(--muted); min-height:18px;">Scratch at least 50% of the card ✨</div>
-      <button class="btn-next" id="scratchNextBtn" style="display:none;" onclick="goToStage(6)">Inspect 48-Hour Protocol →</button>
+      <button class="btn-next" id="scratchNextBtn" style="display:none;" onclick="goToStage(6)">Spin The Birthday Slot Machine →</button>
     </div>
 
-    <!-- STAGE 6: 48-HR PROTOCOL CHECKLIST -->
-    <div class="card" id="stage6" style="display:none;">
-      <span class="badge">Legal Terms & Conditions</span>
-      <h2>The 48-Hour Protocol</h2>
-      <p class="subtext">Tap to sign and accept your birthday privileges through Sept 18 night:</p>
+    <!-- STAGE 6: THE LUCKY BIRTHDAY SLOT MACHINE -->
+    <div class="card" id="stage6" style="display:none; text-align:center;">
+      <span class="badge">Cosmic Jackpot</span>
+      <h2>The Birthday Slots</h2>
+      <p class="subtext">Spin the reels to generate your official forecast for the year ahead:</p>
 
-      <div class="rule-item checked" onclick="toggleRule(this)">
-        <div class="rule-checkbox">✓</div>
-        <div>
-          <div style="font-size:0.9rem; font-weight:600;">Clause 1: Calorie Immunity</div>
-          <div style="font-size:0.78rem; color:var(--muted);">All cakes, treats, and biryani consumed between 17th and 18th have zero calories.</div>
+      <div class="slot-machine-box">
+        <div class="reels-row">
+          <div class="reel" id="reel1">🎂</div>
+          <div class="reel" id="reel2">✨</div>
+          <div class="reel" id="reel3">👑</div>
+        </div>
+
+        <button class="btn-next" id="spinBtn" onclick="spinSlots()" style="margin-top:0;">
+          PULL LEVER & SPIN 🎰
+        </button>
+
+        <div class="slot-result-box" id="slotResult">
+          <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--gold); font-weight:700; margin-bottom:6px;">
+            🎉 JACKPOT COMBINATION CONFIRMED! 🎉
+          </div>
+          <p style="font-size:0.9rem; line-height:1.6; color:#fff;">
+            <b>The Cosmic Verdict:</b> A year packed with career breakthroughs, unbothered peace, unexpected good news, and lots of laughter.
+          </p>
+          <button class="btn-next" onclick="goToStage(7)">Read Personal Letter →</button>
         </div>
       </div>
-
-      <div class="rule-item checked" onclick="toggleRule(this)">
-        <div class="rule-checkbox">✓</div>
-        <div>
-          <div style="font-size:0.9rem; font-weight:600;">Clause 2: The Right to Indecision</div>
-          <div style="font-size:0.78rem; color:var(--muted);">You are legally exempt from choosing what or where to eat. Others must decide.</div>
-        </div>
-      </div>
-
-      <div class="rule-item checked" onclick="toggleRule(this)">
-        <div class="rule-checkbox">✓</div>
-        <div>
-          <div style="font-size:0.9rem; font-weight:600;">Clause 3: 48-Hour Debate Immunity</div>
-          <div style="font-size:0.78rem; color:var(--muted);">You are universally correct in all conversations until Sept 18, 11:59 PM.</div>
-        </div>
-      </div>
-
-      <button class="btn-next" onclick="goToStage(7)">Read Personal Letter →</button>
     </div>
 
     <!-- STAGE 7: THE FINAL LETTER + WHATSAPP -->
@@ -693,17 +706,17 @@
         <h2 style="color:#191817; margin-top:14px; font-size:1.65rem;">Happy Birthday, Sobana! 🌸</h2>
 
         <div class="letter-body">
-          Getting two birthdays in a single week is rare, but claiming two consecutive dates across both the English and Tamil calendars? That is pure VIP status.
+          Having back-to-back celebration dates across both the English and Tamil calendars is rare, but it fits you completely.
           <br><br>
-          Starting tonight on the 17th and rolling straight through the Tamil calendar date on the 18th—I hope these next 48 hours bring you nothing but genuine peace, effortless laughter, and the company of the people who cherish you most.
+          Starting tonight on the 17th and rolling straight into the Tamil calendar date on the 18th—I hope both days bring you genuine peace, effortless laughter, and the company of the people who cherish you most.
           <br><br>
-          May the year ahead treat you with kindness, give you clarity in your goals, and bring you quiet confidence in everything you take on.
+          May the year ahead treat you with kindness, give you clarity in your goals, and bring you quiet confidence in everything you pursue.
         </div>
 
         <div class="signature">— Best wishes, always ✨</div>
 
-        <a class="btn-wa" href="https://wa.me/?text=I%20have%20reviewed%20my%2048-hour%20birthday%20audit%20and%20officially%20claim%20my%20VIP%20status!%20%F0%9F%91%91%E2%9C%A8" target="_blank">
-          Send Verdict via WhatsApp 💬
+        <a class="btn-wa" href="https://wa.me/?text=I%20have%20completed%20the%20birthday%20experience%20and%20officially%20hit%20the%20jackpot!%20%F0%9F%8E%B0%F0%9F%91%91%E2%9C%A8" target="_blank">
+          Send Reaction via WhatsApp 💬
         </a>
       </div>
     </div>
@@ -727,9 +740,7 @@
       if (target) target.style.display = 'block';
       setProgress(stageNum, 7);
 
-      if (stageNum === 5) {
-        initScratchCard();
-      }
+      if (stageNum === 5) initScratchCard();
 
       if (stageNum === 7) {
         confetti({
@@ -743,7 +754,7 @@
       }
     }
 
-    // PASSCODE LOGIC
+    // PASSCODE
     let enteredPin = "";
     function startKeypad(type) {
       document.getElementById('stage1').style.display = 'none';
@@ -753,7 +764,7 @@
       } else if (type === '18') {
         document.getElementById('pinSubtitle').innerText = "Tamil calendar traditions! Enter DDMM to verify:";
       } else {
-        document.getElementById('pinSubtitle').innerText = "48-Hour VIP pass requested! Enter your DDMM birth code:";
+        document.getElementById('pinSubtitle').innerText = "Double celebration requested! Enter your DDMM birth code:";
       }
     }
 
@@ -851,7 +862,6 @@
       canvas.width = rect.width;
       canvas.height = rect.height;
 
-      // Draw metallic cover
       ctx.fillStyle = '#9e8a68';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = '#fff';
@@ -886,18 +896,58 @@
       canvas.addEventListener('touchmove', scratch);
     }
 
-    // RULES TOGGLE
-    function toggleRule(el) {
-      el.classList.toggle('checked');
+    // STAGE 6: SLOT MACHINE LOGIC
+    const icons = ['🌸', '🍰', '☕', '💎', '🎉', '🌟', '👑', '🎂'];
+    let isSpinning = false;
+
+    function spinSlots() {
+      if (isSpinning) return;
+      isSpinning = true;
+
+      const r1 = document.getElementById('reel1');
+      const r2 = document.getElementById('reel2');
+      const r3 = document.getElementById('reel3');
+      const btn = document.getElementById('spinBtn');
+
+      r1.classList.add('spinning');
+      r2.classList.add('spinning');
+      r3.classList.add('spinning');
+      btn.innerText = "SPINNING...";
+
+      let counter = 0;
+      const interval = setInterval(() => {
+        r1.innerText = icons[Math.floor(Math.random() * icons.length)];
+        r2.innerText = icons[Math.floor(Math.random() * icons.length)];
+        r3.innerText = icons[Math.floor(Math.random() * icons.length)];
+        counter++;
+
+        if (counter > 15) {
+          clearInterval(interval);
+          r1.classList.remove('spinning');
+          r2.classList.remove('spinning');
+          r3.classList.remove('spinning');
+
+          // Guaranteed Winner Combo
+          r1.innerText = '👑';
+          r2.innerText = '🎂';
+          r3.innerText = '✨';
+
+          btn.style.display = 'none';
+          document.getElementById('slotResult').style.display = 'block';
+
+          confetti({ particleCount: 70, spread: 70, origin: { y: 0.6 } });
+          isSpinning = false;
+        }
+      }, 100);
     }
 
-    // FLOATING EMERGENCY BUTTON
+    // EMERGENCY BUTTON BANTER
     let secretCount = 0;
     const banter = [
       "⚠️ Why did you press that?!",
       "🛑 Seriously, stop touching this button.",
       "🍰 Fine! Each press grants 1 additional slice of cake.",
-      "👑 Okay, you are officially the most curious birthday VIP."
+      "👑 Okay, you are officially the most curious person on the internet."
     ];
     function pressSecret() {
       alert(banter[secretCount % banter.length]);
