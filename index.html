@@ -3,25 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Sobana · A Personal Note</title>
+  <title>Sobana's Official Birthday Verdict ✨</title>
   
-  <!-- Modern Clean Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
     :root {
-      --bg: #0c0d0e;
-      --card-bg: #16181a;
-      --border: rgba(255, 255, 255, 0.08);
-      --text-main: #f2f2f3;
-      --text-muted: #8a8f98;
-      --accent-gold: #e2b87e;
-      --accent-soft: #f7e6d0;
-      --paper: #fbf9f5;
-      --paper-text: #262422;
+      --bg: #0d0f12;
+      --card-bg: #16191f;
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text-main: #f1f3f7;
+      --text-muted: #8b92a0;
+      --gold: #dfb175;
+      --gold-glow: rgba(223, 177, 117, 0.25);
+      --paper: #fbf9f4;
+      --paper-text: #21201d;
     }
 
     * {
@@ -30,7 +29,7 @@
       padding: 0;
       -webkit-font-smoothing: antialiased;
       -webkit-tap-highlight-color: transparent;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
     body {
@@ -41,116 +40,144 @@
       justify-content: center;
       align-items: center;
       padding: 20px 16px;
-      overflow-x: hidden;
     }
 
-    .wrapper {
+    .container {
       width: 100%;
       max-width: 420px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      position: relative;
     }
 
-    /* ---------------- LOCK SCREEN ---------------- */
-    #lockScreen {
+    /* Quiz Card */
+    .fun-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 32px 24px;
       width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
       text-align: center;
-      padding: 30px 10px;
+      transition: all 0.4s ease;
     }
 
     .badge {
+      display: inline-block;
       font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--accent-gold);
-      background: rgba(226, 184, 126, 0.08);
-      border: 1px solid rgba(226, 184, 126, 0.2);
-      padding: 6px 14px;
+      color: var(--gold);
+      background: var(--gold-glow);
+      padding: 5px 14px;
       border-radius: 20px;
-      margin-bottom: 24px;
-      font-weight: 500;
+      margin-bottom: 18px;
     }
 
-    .lock-title {
+    h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.85rem;
-      font-weight: 500;
-      letter-spacing: -0.5px;
+      font-size: 1.75rem;
+      line-height: 1.3;
+      margin-bottom: 10px;
       color: var(--text-main);
-      margin-bottom: 8px;
     }
 
-    .lock-subtitle {
-      font-size: 0.88rem;
+    .desc {
+      font-size: 0.9rem;
       color: var(--text-muted);
-      line-height: 1.5;
-      margin-bottom: 36px;
+      line-height: 1.6;
+      margin-bottom: 26px;
     }
 
-    /* Passcode Dots */
+    /* Option Buttons */
+    .btn-option {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1.5px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 16px 18px;
+      margin-bottom: 14px;
+      text-align: left;
+      cursor: pointer;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .btn-option:active {
+      transform: scale(0.98);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--gold);
+    }
+
+    .pill {
+      font-size: 0.7rem;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 8px;
+      border-radius: 8px;
+      color: var(--text-muted);
+    }
+
+    /* Keypad Section (Hidden initially) */
+    #keypadSection {
+      display: none;
+      animation: fadeIn 0.4s ease forwards;
+    }
+
     .pin-display {
       display: flex;
-      gap: 16px;
-      margin-bottom: 40px;
+      justify-content: center;
+      gap: 14px;
+      margin: 22px 0 26px;
     }
 
     .pin-dot {
       width: 14px;
       height: 14px;
       border-radius: 50%;
-      border: 1.5px solid var(--border);
-      transition: all 0.2s ease;
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.2s;
     }
 
     .pin-dot.filled {
-      background-color: var(--accent-gold);
-      border-color: var(--accent-gold);
-      box-shadow: 0 0 10px rgba(226, 184, 126, 0.4);
+      background: var(--gold);
+      border-color: var(--gold);
+      box-shadow: 0 0 10px var(--gold);
     }
 
-    /* Keypad Grid */
-    .keypad {
+    .keypad-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      width: 100%;
-      max-width: 280px;
+      gap: 12px;
+      max-width: 260px;
+      margin: 0 auto;
     }
 
     .key-btn {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 50%;
-      width: 72px;
-      height: 72px;
-      margin: 0 auto;
+      width: 68px;
+      height: 68px;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
-      font-weight: 400;
-      color: var(--text-main);
+      font-size: 1.4rem;
+      font-weight: 500;
       cursor: pointer;
       user-select: none;
-      transition: all 0.15s ease;
+      margin: 0 auto;
+      transition: transform 0.1s;
     }
 
     .key-btn:active {
-      transform: scale(0.92);
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .key-sub {
-      font-size: 0.55rem;
-      color: var(--text-muted);
-      letter-spacing: 1.5px;
-      margin-top: 1px;
+      transform: scale(0.9);
+      background: rgba(255, 255, 255, 0.12);
     }
 
     .key-btn.action {
@@ -160,91 +187,86 @@
       color: var(--text-muted);
     }
 
-    .error-text {
+    .error-msg {
       font-size: 0.8rem;
       color: #ff6b6b;
-      margin-top: 18px;
+      margin-top: 14px;
       min-height: 18px;
-      font-weight: 400;
     }
 
-    /* ---------------- UNLOCKED EXPERIENCE ---------------- */
-    #mainExperience {
+    /* Revealed Letter */
+    #letterSection {
       display: none;
       width: 100%;
-      animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: popIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Real Paper Letter styling */
-    .letter-paper {
+    .paper-card {
       background: var(--paper);
       color: var(--paper-text);
-      border-radius: 12px;
-      padding: 36px 28px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+      border-radius: 18px;
+      padding: 34px 26px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.6);
       position: relative;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
-    .stamp {
+    .wax-seal {
       position: absolute;
       top: 24px;
       right: 24px;
-      width: 48px;
-      height: 48px;
-      border: 1px dashed rgba(0, 0, 0, 0.2);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #9b2226;
+      color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-weight: 700;
       font-size: 0.65rem;
       letter-spacing: 1px;
-      color: #928e88;
       text-transform: uppercase;
-      transform: rotate(6deg);
+      box-shadow: 0 4px 10px rgba(155, 34, 38, 0.4);
+      transform: rotate(10deg);
     }
 
-    .date-label {
+    .date-stamp {
       font-size: 0.75rem;
-      color: #797570;
+      color: #8c8880;
       letter-spacing: 1px;
       text-transform: uppercase;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
-    .salutation {
+    .letter-title {
       font-family: 'Playfair Display', serif;
       font-size: 1.6rem;
-      font-weight: 600;
-      margin-bottom: 18px;
-      color: #191817;
+      color: #171614;
+      margin-bottom: 16px;
     }
 
-    .letter-body {
+    .letter-content {
       font-family: 'Playfair Display', serif;
       font-size: 1.05rem;
       line-height: 1.8;
-      color: #3b3734;
+      color: #383430;
       margin-bottom: 24px;
     }
 
-    .signature {
+    .letter-sign {
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      font-size: 1.15rem;
-      color: #191817;
+      font-size: 1.1rem;
+      color: #171614;
       text-align: right;
     }
 
-    /* Minimal Audio Player */
-    .spotify-track-card {
-      background: #121315;
-      border: 1px solid var(--border);
-      border-radius: 14px;
+    /* Mini Audio Bar */
+    .audio-card {
+      background: #14171d;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
       padding: 14px 18px;
       display: flex;
       align-items: center;
@@ -252,39 +274,9 @@
       width: 100%;
     }
 
-    .track-meta {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .album-art {
-      width: 44px;
-      height: 44px;
-      background: #25282c;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      color: var(--accent-gold);
-    }
-
-    .track-title {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: #fff;
-    }
-
-    .track-artist {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
     .play-btn {
-      width: 38px;
-      height: 38px;
+      width: 40px;
+      height: 40px;
       background: #fff;
       border: none;
       border-radius: 50%;
@@ -292,174 +284,204 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: transform 0.15s;
     }
 
-    .play-btn:active {
-      transform: scale(0.92);
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: translateY(30px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
   </style>
 </head>
 <body>
 
-  <div class="wrapper">
+  <div class="container">
     
-    <!-- AUTHENTIC PASSCODE SCREEN -->
-    <div id="lockScreen">
-      <div class="badge">Private Note</div>
-      <h1 class="lock-title">Enter Passcode</h1>
-      <p class="lock-subtitle">This space is locked for Sobana.<br>Enter the 4-digit key to view.</p>
+    <!-- STEP 1: THE TEASER QUESTION -->
+    <div class="fun-card" id="questionCard">
+      <span class="badge">Official Inquiry</span>
+      <h1>Wait, Sobana...</h1>
+      <p class="desc">We have a critical calendar discrepancy. When exactly are you claiming your birthday this year?</p>
 
-      <div class="pin-display">
-        <div class="pin-dot" id="dot0"></div>
-        <div class="pin-dot" id="dot1"></div>
-        <div class="pin-dot" id="dot2"></div>
-        <div class="pin-dot" id="dot3"></div>
-      </div>
+      <button class="btn-option" onclick="chooseDate('17')">
+        <span>📅 Today (17th Sept)</span>
+        <span class="pill">English Calendar</span>
+      </button>
 
-      <div class="keypad">
-        <div class="key-btn" onclick="enterDigit('1')">1</div>
-        <div class="key-btn" onclick="enterDigit('2')">2<span class="key-sub">ABC</span></div>
-        <div class="key-btn" onclick="enterDigit('3')">3<span class="key-sub">DEF</span></div>
-        <div class="key-btn" onclick="enterDigit('4')">4<span class="key-sub">GHI</span></div>
-        <div class="key-btn" onclick="enterDigit('5')">5<span class="key-sub">JKL</span></div>
-        <div class="key-btn" onclick="enterDigit('6')">6<span class="key-sub">MNO</span></div>
-        <div class="key-btn" onclick="enterDigit('7')">7<span class="key-sub">PQRS</span></div>
-        <div class="key-btn" onclick="enterDigit('8')">8<span class="key-sub">TUV</span></div>
-        <div class="key-btn" onclick="enterDigit('9')">9<span class="key-sub">WXYZ</span></div>
-        <div class="key-btn action" onclick="clearPin()">Clear</div>
-        <div class="key-btn" onclick="enterDigit('0')">0</div>
-        <div class="key-btn action" onclick="deleteDigit()">⌫</div>
-      </div>
+      <button class="btn-option" onclick="chooseDate('18')">
+        <span>🪔 Tomorrow (18th Sept)</span>
+        <span class="pill">Tamil Calendar</span>
+      </button>
 
-      <div class="error-text" id="errorMessage"></div>
+      <button class="btn-option" onclick="chooseDate('both')" style="border-color: rgba(223,177,117,0.4);">
+        <span>👑 Both 17th & 18th!</span>
+        <span class="pill" style="color: var(--gold);">48-Hr Birthday VIP</span>
+      </button>
     </div>
 
-    <!-- MAIN UNLOCKED EXPERIENCE -->
-    <div id="mainExperience">
-      
-      <!-- Authentic Paper Note -->
-      <div class="letter-paper">
-        <div class="stamp">SEP 17</div>
-        <div class="date-label">September 17 · Special Edition</div>
-        
-        <div class="salutation">Happy Birthday, Sobana.</div>
-        
-        <div class="letter-body">
-          Some years feel like chapters, but moments like today are the milestones worth pausing for. 
-          <br><br>
-          Wishing you clarity in everything you pursue, peace of mind, genuine laughter with the people who matter, and a year ahead that surprises you in the most beautiful ways.
-        </div>
+    <!-- STEP 2: THE PIN UNLOCK -->
+    <div class="fun-card" id="keypadSection">
+      <span class="badge" id="teaseBadge">Calendar Resolution</span>
+      <h2 id="teaseTitle" style="font-size: 1.35rem; margin-bottom: 8px;">Enter Birth Code</h2>
+      <p class="desc" id="teaseSub">Enter DDMM to unlock your 48-hour pass.</p>
 
-        <div class="signature">— Best wishes, always</div>
+      <div class="pin-display">
+        <div class="pin-dot" id="d0"></div>
+        <div class="pin-dot" id="d1"></div>
+        <div class="pin-dot" id="d2"></div>
+        <div class="pin-dot" id="d3"></div>
       </div>
 
-      <!-- Minimal Audio Player -->
-      <div class="spotify-track-card">
-        <div class="track-meta">
-          <div class="album-art">♪</div>
-          <div>
-            <div class="track-title">Peaceful Reflections</div>
-            <div class="track-artist">Curated for Sobana</div>
-          </div>
+      <div class="keypad-grid">
+        <div class="key-btn" onclick="press('1')">1</div>
+        <div class="key-btn" onclick="press('2')">2</div>
+        <div class="key-btn" onclick="press('3')">3</div>
+        <div class="key-btn" onclick="press('4')">4</div>
+        <div class="key-btn" onclick="press('5')">5</div>
+        <div class="key-btn" onclick="press('6')">6</div>
+        <div class="key-btn" onclick="press('7')">7</div>
+        <div class="key-btn" onclick="press('8')">8</div>
+        <div class="key-btn" onclick="press('9')">9</div>
+        <div class="key-btn action" onclick="resetPin()">Clear</div>
+        <div class="key-btn" onclick="press('0')">0</div>
+        <div class="key-btn action" onclick="backspace()">⌫</div>
+      </div>
+
+      <div class="error-msg" id="errHint"></div>
+    </div>
+
+    <!-- STEP 3: THE REVEALED NOTE -->
+    <div id="letterSection">
+      <div class="paper-card">
+        <div class="wax-seal">SEP 17-18</div>
+        <div class="date-stamp">48-Hour Birthday Pass · Validated</div>
+
+        <h3 class="letter-title">Happy Birthday, Sobana! 🎂</h3>
+
+        <div class="letter-content">
+          Why settle for one calendar when the stars give you two? 
+          <br><br>
+          Starting tonight (Sept 17) and rolling all the way through the Tamil calendar date (Sept 18) — you get a full 48-hour birthday celebration. That means double the wishes, zero stress, and endless reasons to smile.
+          <br><br>
+          May the year ahead bring you peace of mind, immense success, and genuine moments of pure joy.
         </div>
-        <button class="play-btn" id="audioCtrl" onclick="togglePlayback()">
-          <svg id="playIcon" width="14" height="14" viewBox="0 0 24 24" fill="#000">
+
+        <div class="letter-sign">— Best wishes, always ✨</div>
+      </div>
+
+      <div class="audio-card">
+        <div>
+          <div style="font-size: 0.88rem; font-weight: 600;">Birthday Reflections</div>
+          <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 2px;">Playing serene melodies</div>
+        </div>
+        <button class="play-btn" onclick="toggleAudio()">
+          <svg id="playSvg" width="14" height="14" viewBox="0 0 24 24" fill="#000">
             <polygon points="5 3 19 12 5 21 5 3"></polygon>
           </svg>
         </button>
       </div>
-
     </div>
 
   </div>
 
-  <audio id="ambientSound" loop src="https://assets.mixkit.co/music/preview/mixkit-serene-view-443.mp3"></audio>
+  <audio id="bgSong" loop src="https://assets.mixkit.co/music/preview/mixkit-serene-view-443.mp3"></audio>
 
   <script>
-    let currentCode = "";
-    const correctCode = "1709";
+    let code = "";
 
-    function enterDigit(digit) {
-      if (currentCode.length < 4) {
-        currentCode += digit;
-        updateDots();
-        if (currentCode.length === 4) {
-          setTimeout(validatePin, 150);
+    function chooseDate(type) {
+      document.getElementById('questionCard').style.display = 'none';
+      const keypad = document.getElementById('keypadSection');
+      const sub = document.getElementById('teaseSub');
+      
+      if (type === '17') {
+        sub.innerText = "English calendar it is! Enter your birth code (DDMM) to unlock.";
+      } else if (type === '18') {
+        sub.innerText = "Tamil calendar traditions! Enter your birth code (DDMM) to unlock.";
+      } else {
+        sub.innerText = "The correct answer! Enter your birth code (1709 or 1809) to claim your pass.";
+      }
+
+      keypad.style.display = 'block';
+    }
+
+    function press(n) {
+      if (code.length < 4) {
+        code += n;
+        renderDots();
+        if (code.length === 4) {
+          setTimeout(checkCode, 150);
         }
       }
     }
 
-    function deleteDigit() {
-      if (currentCode.length > 0) {
-        currentCode = currentCode.slice(0, -1);
-        updateDots();
-        clearError();
+    function backspace() {
+      if (code.length > 0) {
+        code = code.slice(0, -1);
+        renderDots();
+        document.getElementById('errHint').innerText = "";
       }
     }
 
-    function clearPin() {
-      currentCode = "";
-      updateDots();
-      clearError();
+    function resetPin() {
+      code = "";
+      renderDots();
+      document.getElementById('errHint').innerText = "";
     }
 
-    function updateDots() {
+    function renderDots() {
       for (let i = 0; i < 4; i++) {
-        const dot = document.getElementById(`dot${i}`);
-        if (i < currentCode.length) {
-          dot.classList.add('filled');
+        const d = document.getElementById(`d${i}`);
+        if (i < code.length) {
+          d.classList.add('filled');
         } else {
-          dot.classList.remove('filled');
+          d.classList.remove('filled');
         }
       }
     }
 
-    function clearError() {
-      document.getElementById('errorMessage').innerText = "";
-    }
-
-    function validatePin() {
-      if (currentCode === correctCode) {
-        // Classy discreet gold confetti
+    function checkCode() {
+      // Both 1709 (English date) and 1809 (Tamil calendar date) work!
+      if (code === "1709" || code === "1809") {
         confetti({
-          particleCount: 55,
-          spread: 60,
-          colors: ['#e2b87e', '#ffffff', '#c5a059'],
-          origin: { y: 0.7 }
+          particleCount: 60,
+          spread: 70,
+          colors: ['#dfb175', '#ffffff', '#e07a5f'],
+          origin: { y: 0.65 }
         });
 
-        document.getElementById('lockScreen').style.display = 'none';
-        document.getElementById('mainExperience').style.display = 'block';
+        document.getElementById('keypadSection').style.display = 'none';
+        document.getElementById('letterSection').style.display = 'block';
 
-        // Start subtle audio playback
-        const audio = document.getElementById('ambientSound');
-        audio.play().then(() => updatePlayIcon(true)).catch(() => {});
+        const audio = document.getElementById('bgSong');
+        audio.play().then(() => updateIcon(true)).catch(() => {});
       } else {
-        document.getElementById('errorMessage').innerText = "Incorrect passcode";
-        setTimeout(() => {
-          clearPin();
-        }, 500);
+        document.getElementById('errHint').innerText = "Try 1709 or 1809 😉";
+        setTimeout(resetPin, 500);
       }
     }
 
-    function togglePlayback() {
-      const audio = document.getElementById('ambientSound');
+    function toggleAudio() {
+      const audio = document.getElementById('bgSong');
       if (audio.paused) {
         audio.play();
-        updatePlayIcon(true);
+        updateIcon(true);
       } else {
         audio.pause();
-        updatePlayIcon(false);
+        updateIcon(false);
       }
     }
 
-    function updatePlayIcon(isPlaying) {
-      const icon = document.getElementById('playIcon');
+    function updateIcon(isPlaying) {
+      const svg = document.getElementById('playSvg');
       if (isPlaying) {
-        icon.innerHTML = '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>';
+        svg.innerHTML = '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>';
       } else {
-        icon.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
+        svg.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
       }
     }
   </script>
