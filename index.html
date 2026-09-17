@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Sobana's 48-Hour Birthday Audit</title>
+  <title>Sobana · The 48-Hour Birthday Experience</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,16 +12,16 @@
 
   <style>
     :root {
-      --bg: #0c0e12;
-      --surface: #15181f;
+      --bg: #0b0d11;
+      --surface: #14171e;
       --surface-border: rgba(255, 255, 255, 0.08);
-      --text: #f3f4f6;
+      --text: #f4f5f7;
       --muted: #8b92a0;
-      --gold: #dfb175;
-      --gold-bg: rgba(223, 177, 117, 0.12);
+      --gold: #e2b474;
+      --gold-glow: rgba(226, 180, 116, 0.18);
       --paper: #fbf9f4;
-      --paper-ink: #22201d;
-      --radius: 22px;
+      --paper-ink: #201e1b;
+      --radius: 24px;
     }
 
     * {
@@ -39,7 +39,7 @@
       min-height: 100vh;
       display: flex;
       justify-content: center;
-      padding: 24px 16px 80px;
+      padding: 24px 16px 90px;
     }
 
     .app {
@@ -50,35 +50,35 @@
       gap: 16px;
     }
 
-    /* Progress Tracker */
+    /* Progress Header */
     .progress-bar-container {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 4px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .step-indicator {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       letter-spacing: 1.5px;
       text-transform: uppercase;
       color: var(--gold);
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .progress-track {
       height: 4px;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.08);
       border-radius: 10px;
       overflow: hidden;
-      width: 55%;
+      width: 50%;
     }
 
     .progress-fill {
       height: 100%;
       background: var(--gold);
-      width: 20%;
+      width: 16%;
       transition: width 0.4s ease;
     }
 
@@ -88,21 +88,21 @@
       border: 1px solid var(--surface-border);
       border-radius: var(--radius);
       padding: 28px 22px;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
-      animation: fadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+      animation: slideFade 0.45s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .badge {
       display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 600;
+      font-size: 0.68rem;
+      font-weight: 700;
       letter-spacing: 1.5px;
       text-transform: uppercase;
       color: var(--gold);
-      background: var(--gold-bg);
+      background: var(--gold-glow);
       padding: 5px 12px;
       border-radius: 20px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     h1, h2 {
@@ -118,11 +118,11 @@
     p.subtext {
       font-size: 0.9rem;
       color: var(--muted);
-      line-height: 1.55;
+      line-height: 1.6;
       margin-bottom: 22px;
     }
 
-    /* Option & Choice Buttons */
+    /* Choice Buttons */
     .choice-btn {
       width: 100%;
       background: rgba(255, 255, 255, 0.04);
@@ -155,14 +155,13 @@
       color: var(--muted);
     }
 
-    /* Next / Action Buttons */
     .btn-next {
       width: 100%;
       background: var(--gold);
       color: #121316;
       border: none;
-      padding: 15px;
-      border-radius: 15px;
+      padding: 16px;
+      border-radius: 16px;
       font-size: 0.95rem;
       font-weight: 700;
       cursor: pointer;
@@ -172,7 +171,7 @@
 
     .btn-next:active { transform: scale(0.98); }
 
-    /* Keypad Dots & Grid */
+    /* Keypad */
     .pin-row {
       display: flex;
       justify-content: center;
@@ -221,19 +220,133 @@
     .key:active { transform: scale(0.92); background: rgba(255,255,255,0.1); }
     .key.action { background: transparent; border: none; font-size: 0.85rem; color: var(--muted); }
 
-    /* Quiz Card Styling */
-    .feedback-box {
-      margin-top: 15px;
-      padding: 14px;
-      border-radius: 12px;
-      font-size: 0.88rem;
-      line-height: 1.5;
-      background: rgba(223, 177, 117, 0.08);
-      border: 1px solid rgba(223, 177, 117, 0.2);
-      display: none;
+    /* CANDLE BLOWOUT COMPONENT */
+    .candle-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 25px 0 35px;
+      cursor: pointer;
     }
 
-    /* VIP Checklist Toggles */
+    .flame {
+      width: 20px;
+      height: 35px;
+      background: linear-gradient(to bottom, #fff, #ffd166, #ff5e36);
+      border-radius: 50% 50% 20% 20%;
+      box-shadow: 0 0 25px #ffd166, 0 0 45px #ff5e36;
+      animation: flicker 0.15s infinite alternate;
+      transition: all 0.4s ease;
+    }
+
+    .flame.blown {
+      transform: scale(0);
+      opacity: 0;
+      box-shadow: none;
+    }
+
+    .candle-stick {
+      width: 24px;
+      height: 80px;
+      background: linear-gradient(to right, #f7e1d7, #ffffff, #dedbd2);
+      border-radius: 4px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+      position: relative;
+    }
+
+    .candle-wick {
+      width: 3px;
+      height: 12px;
+      background: #333;
+      margin: 0 auto;
+    }
+
+    @keyframes flicker {
+      0% { transform: scale(1) rotate(-1deg); }
+      100% { transform: scale(1.06) rotate(1deg); }
+    }
+
+    /* ASTROLOGY COMPARISON TABLE */
+    .astro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .astro-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--surface-border);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .astro-tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .astro-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .astro-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* POLAROID CARDS */
+    .polaroid-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin: 18px 0;
+    }
+
+    .polaroid {
+      background: #fff;
+      color: #222;
+      padding: 14px 14px 22px;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      transform: rotate(-1deg);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .polaroid:nth-child(even) { transform: rotate(1.5deg); }
+    .polaroid:active { transform: scale(0.98); }
+
+    .photo-area {
+      height: 140px;
+      background: #1a1c22;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 2.2rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .polaroid-caption {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      font-style: italic;
+      margin-top: 12px;
+      text-align: center;
+      color: #333;
+    }
+
+    /* RULES & CHECKLIST */
     .rule-item {
       display: flex;
       align-items: flex-start;
@@ -244,7 +357,6 @@
       border-radius: 14px;
       margin-bottom: 10px;
       cursor: pointer;
-      user-select: none;
     }
 
     .rule-checkbox {
@@ -266,38 +378,13 @@
       color: #121316;
     }
 
-    .rule-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 2px; }
-    .rule-desc { font-size: 0.78rem; color: var(--muted); }
-
-    /* Fortune Generator */
-    .fortune-display {
-      min-height: 120px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1.5px dashed rgba(223, 177, 117, 0.4);
-      border-radius: 18px;
-      padding: 22px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      margin: 18px 0;
-    }
-
-    .fortune-text {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.15rem;
-      line-height: 1.6;
-      color: var(--gold);
-    }
-
-    /* Final Letter Paper */
+    /* FINAL LETTER */
     .paper {
       background: var(--paper);
       color: var(--paper-ink);
-      border-radius: 18px;
+      border-radius: 20px;
       padding: 34px 24px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.6);
       position: relative;
     }
 
@@ -331,22 +418,29 @@
       font-family: 'Playfair Display', serif;
       font-style: italic;
       text-align: right;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
     }
 
-    /* Audio Player */
-    .audio-player {
-      background: #121419;
-      border: 1px solid var(--surface-border);
-      border-radius: 16px;
-      padding: 12px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 14px;
+    /* FLOATING 'DO NOT PRESS' BUTTON */
+    .panic-btn {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(20, 24, 32, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 10px 18px;
+      font-size: 0.78rem;
+      color: #ff708d;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+      z-index: 100;
     }
 
-    @keyframes fadeIn {
+    @keyframes slideFade {
       from { opacity: 0; transform: translateY(12px); }
       to { opacity: 1; transform: translateY(0); }
     }
@@ -357,13 +451,13 @@
   <div class="app">
     <!-- Progress Indicator -->
     <div class="progress-bar-container">
-      <span class="step-indicator" id="stepIndicator">Stage 1 of 5</span>
+      <span class="step-indicator" id="stepIndicator">Stage 1 of 6</span>
       <div class="progress-track">
         <div class="progress-fill" id="progressFill"></div>
       </div>
     </div>
 
-    <!-- CHAPTER 1: THE CALENDAR DISPUTE -->
+    <!-- STAGE 1: CALENDAR DISPUTE -->
     <div class="card" id="stage1">
       <span class="badge">Official Inquiry</span>
       <h1>Hold on, Sobana...</h1>
@@ -379,17 +473,17 @@
         <span class="tag-sm">Tamil Calendar</span>
       </button>
 
-      <button class="choice-btn" onclick="startKeypad('both')" style="border-color: rgba(223,177,117,0.4);">
+      <button class="choice-btn" onclick="startKeypad('both')" style="border-color: rgba(226, 180, 116, 0.4);">
         <span>👑 Both 17th & 18th!</span>
         <span class="tag-sm" style="color:var(--gold);">48-Hr VIP Mode</span>
       </button>
     </div>
 
-    <!-- PIN LOCK PAD (Hidden inside Stage 1) -->
+    <!-- PIN LOCK PAD -->
     <div class="card" id="keypadCard" style="display:none;">
       <span class="badge">Identity Check</span>
       <h2>Enter Passcode</h2>
-      <p class="subtext" id="pinSubtitle">Enter your 4-digit birthday PIN (DDMM) to verify identity.</p>
+      <p class="subtext" id="pinSubtitle">Enter your 4-digit birthday PIN (DDMM) to unlock.</p>
 
       <div class="pin-row">
         <div class="pin-dot" id="d0"></div>
@@ -416,172 +510,190 @@
       <div id="pinError" style="color:#ff6b6b; font-size:0.8rem; text-align:center; margin-top:14px; min-height:18px;"></div>
     </div>
 
-    <!-- CHAPTER 2: THE SOBANA TRIVIA AUDIT -->
-    <div class="card" id="stage2" style="display:none;">
-      <span class="badge">Test of Character</span>
-      <h2 id="quizTitle">Question 1 of 3</h2>
-      <p class="subtext" id="quizQuestion">What is the mandatory protocol when your birthday spans two full calendars?</p>
+    <!-- STAGE 2: INTERACTIVE CANDLE BLOWOUT -->
+    <div class="card" id="stage2" style="display:none; text-align:center;">
+      <span class="badge">Mandatory Ritual</span>
+      <h2>Make A Silent Wish</h2>
+      <p class="subtext">Before proceeding into the VIP zone, tap the flame to blow out the candle.</p>
 
-      <div id="quizOptions"></div>
+      <div class="candle-container" onclick="blowCandle()">
+        <div class="flame" id="candleFlame"></div>
+        <div class="candle-wick"></div>
+        <div class="candle-stick"></div>
+      </div>
 
-      <div class="feedback-box" id="quizFeedback"></div>
-      <button class="btn-next" id="quizNextBtn" style="display:none;" onclick="nextQuestion()">Next Question →</button>
+      <div id="wishStatus" style="font-size:0.9rem; color:var(--gold); font-weight:600; min-height:22px;">Tap the flame to blow ✨</div>
+      <button class="btn-next" id="candleNextBtn" style="display:none;" onclick="goToStage(3)">Continue to Dual Forecast →</button>
     </div>
 
-    <!-- CHAPTER 3: THE 48-HR VIP CONTRACT -->
+    <!-- STAGE 3: TAMIL VS ENGLISH CALENDAR ROAST -->
     <div class="card" id="stage3" style="display:none;">
+      <span class="badge">Astrological Audit</span>
+      <h2>Dual Planetary Analysis</h2>
+      <p class="subtext">Having two birthdays means navigating two conflicting astrological personalities:</p>
+
+      <div class="astro-grid">
+        <div class="astro-card">
+          <div class="astro-tag">English (Sept 17)</div>
+          <div class="astro-title">Virgo Precision</div>
+          <div class="astro-desc">Organized, plans ahead, pretends not to care about tiny details but notices everything.</div>
+        </div>
+        <div class="astro-card">
+          <div class="astro-tag">Tamil (Sept 18)</div>
+          <div class="astro-title">Traditional Royalty</div>
+          <div class="astro-desc">Wants full VIP treatment, zero unsolicited advice, and an afternoon nap.</div>
+        </div>
+      </div>
+
+      <div class="astro-card" style="margin-top:4px;">
+        <div class="astro-tag">Unified Verdict</div>
+        <div class="astro-desc" style="color:#fff;">You are 100% entitled to 48 hours of luxury, snacks, and zero responsibilities.</div>
+      </div>
+
+      <button class="btn-next" onclick="goToStage(4)">Inspect 48-Hour Protocol →</button>
+    </div>
+
+    <!-- STAGE 4: VIP RULES CHECKLIST -->
+    <div class="card" id="stage4" style="display:none;">
       <span class="badge">Legal Terms & Conditions</span>
       <h2>The 48-Hour Protocol</h2>
-      <p class="subtext">To activate your VIP status through Sept 18 night, you must acknowledge and accept all clauses below:</p>
+      <p class="subtext">Tap to sign and accept your birthday privileges through Sept 18 night:</p>
 
-      <div class="rule-item" onclick="toggleRule(this)">
+      <div class="rule-item checked" onclick="toggleRule(this)">
         <div class="rule-checkbox">✓</div>
         <div>
-          <div class="rule-title">Clause 1: Calorie Immunity</div>
-          <div class="rule-desc">Any cake, dessert, or biryani eaten between Sept 17 & 18 contains strictly zero calories.</div>
+          <div style="font-size:0.9rem; font-weight:600;">Clause 1: Calorie Immunity</div>
+          <div style="font-size:0.78rem; color:var(--muted);">All cakes, treats, and biryani consumed between 17th and 18th have zero calories.</div>
         </div>
       </div>
 
-      <div class="rule-item" onclick="toggleRule(this)">
+      <div class="rule-item checked" onclick="toggleRule(this)">
         <div class="rule-checkbox">✓</div>
         <div>
-          <div class="rule-title">Clause 2: The Right to Indecision</div>
-          <div class="rule-desc">You are exempt from deciding "Where to eat" or "What to do." Others must figure it out.</div>
+          <div style="font-size:0.9rem; font-weight:600;">Clause 2: The Right to Indecision</div>
+          <div style="font-size:0.78rem; color:var(--muted);">You are legally exempt from choosing what or where to eat. Others must decide.</div>
         </div>
       </div>
 
-      <div class="rule-item" onclick="toggleRule(this)">
+      <div class="rule-item checked" onclick="toggleRule(this)">
         <div class="rule-checkbox">✓</div>
         <div>
-          <div class="rule-title">Clause 3: 48-Hour Argument Victory</div>
-          <div class="rule-desc">You are automatically 100% correct in every discussion until Sept 18, 11:59 PM.</div>
+          <div style="font-size:0.9rem; font-weight:600;">Clause 3: 48-Hour Debate Immunity</div>
+          <div style="font-size:0.78rem; color:var(--muted);">You are universally correct in all conversations until Sept 18, 11:59 PM.</div>
         </div>
       </div>
 
-      <button class="btn-next" id="acceptRulesBtn" onclick="finishRules()">Sign & Activate Pass ✍️</button>
+      <button class="btn-next" onclick="goToStage(5)">View Memory Polaroids →</button>
     </div>
 
-    <!-- CHAPTER 4: THE 2026-2027 PROPHECY GENERATOR -->
-    <div class="card" id="stage4" style="display:none;">
-      <span class="badge">Cosmic Forecast</span>
-      <h2>Sobana’s Year Ahead</h2>
-      <p class="subtext">The algorithm has analyzed the alignment between the English and Tamil calendars. Tap to reveal your prophecies:</p>
+    <!-- STAGE 5: POLAROID MEMORY SNAPSHOTS -->
+    <div class="card" id="stage5" style="display:none;">
+      <span class="badge">Time Capsule</span>
+      <h2>Polaroid Memories</h2>
+      <p class="subtext">Tap any polaroid snapshot to inspect:</p>
 
-      <div class="fortune-display">
-        <div class="fortune-text" id="fortuneOutput">Tap below to reveal prophecy #1...</div>
+      <div class="polaroid-gallery">
+        <div class="polaroid" onclick="tapPolaroid(this, 'The Unstoppable Energy ⚡')">
+          <div class="photo-area">🌸</div>
+          <div class="polaroid-caption">"Radiating calm & grace as always"</div>
+        </div>
+        <div class="polaroid" onclick="tapPolaroid(this, 'Double Celebration Mode 🎉')">
+          <div class="photo-area">🎂</div>
+          <div class="polaroid-caption">"Sept 17 vs Sept 18: Why not both?"</div>
+        </div>
       </div>
 
-      <button class="choice-btn" onclick="drawFortune()" style="justify-content:center; text-align:center; font-weight:600;">
-        ✨ Draw Another Prophecy (<span id="fortuneCount">3</span> remaining)
-      </button>
-
-      <button class="btn-next" id="fortuneDoneBtn" style="display:none;" onclick="goToStage(5)">
-        Proceed to Private Letter →
-      </button>
+      <button class="btn-next" onclick="goToStage(6)">Read Personal Letter →</button>
     </div>
 
-    <!-- CHAPTER 5: THE FINAL PRIVATE LETTER -->
-    <div id="stage5" style="display:none;">
+    <!-- STAGE 6: THE PRIVATE LETTER -->
+    <div id="stage6" style="display:none;">
       <div class="paper">
         <div class="stamp">SEP 17-18</div>
-        <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; color:#888;">Personal Edition</div>
+        <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:1.5px; color:#888;">Personal Edition</div>
         
         <h2 style="color:#191817; margin-top:14px; font-size:1.65rem;">Happy Birthday, Sobana! 🌸</h2>
 
         <div class="letter-body">
-          Getting two birthdays in a single week is rare, but getting to celebrate across two calendars back-to-back? That is pure VIP status.
+          Getting two birthdays in a single week is rare, but claiming two consecutive dates across both the English and Tamil calendars? That is pure VIP status.
           <br><br>
-          Starting tonight on the 17th and going straight through the Tamil calendar date on the 18th—I hope these next 48 hours bring you nothing but genuine peace, non-stop laughter, and the company of the people who cherish you most.
+          Starting tonight on the 17th and rolling straight through the Tamil calendar date on the 18th—I hope these next 48 hours bring you nothing but genuine peace, effortless laughter, and the company of the people who cherish you most.
           <br><br>
           May the year ahead treat you with kindness, give you clarity in your goals, and bring you quiet confidence in everything you take on.
         </div>
 
         <div class="signature">— Best wishes, always ✨</div>
       </div>
-
-      <!-- Ambient Audio Player -->
-      <div class="audio-player">
-        <div>
-          <div style="font-size:0.85rem; font-weight:600;">Serene Night Ambience</div>
-          <div style="font-size:0.7rem; color:var(--muted);">Curated for Sobana</div>
-        </div>
-        <button class="key action" style="width:40px; height:40px; background:#fff; border-radius:50%; color:#000;" onclick="toggleMusic()">
-          <span id="musicIcon">▶</span>
-        </button>
-      </div>
     </div>
 
   </div>
 
+  <!-- FLOATING 'DO NOT PRESS' EMERGENCY BUTTON -->
+  <button class="panic-btn" onclick="pressSecret()">⚠️ Do Not Press</button>
+
   <audio id="ambientTrack" loop src="https://assets.mixkit.co/music/preview/mixkit-serene-view-443.mp3"></audio>
 
   <script>
-    // Navigation Progress
     function setProgress(step, total) {
       document.getElementById('stepIndicator').innerText = `Stage ${step} of ${total}`;
       document.getElementById('progressFill').style.width = `${(step / total) * 100}%`;
     }
 
     function goToStage(stageNum) {
-      document.querySelectorAll('.app > .card, .app > #stage5').forEach(el => el.style.display = 'none');
-      document.getElementById(`stage${stageNum}`).style.display = 'block';
-      setProgress(stageNum, 5);
+      document.querySelectorAll('.app > .card, .app > #stage6').forEach(el => el.style.display = 'none');
+      const target = document.getElementById(`stage${stageNum}`);
+      if (target) target.style.display = 'block';
+      setProgress(stageNum, 6);
 
-      if (stageNum === 5) {
+      if (stageNum === 6) {
         confetti({
-          particleCount: 75,
-          spread: 70,
-          colors: ['#dfb175', '#ffffff', '#e07a5f'],
+          particleCount: 80,
+          spread: 75,
+          colors: ['#e2b474', '#ffffff', '#e07a5f'],
           origin: { y: 0.6 }
         });
         const audio = document.getElementById('ambientTrack');
-        audio.play().then(() => {
-          document.getElementById('musicIcon').innerText = '⏸';
-        }).catch(() => {});
+        audio.play().catch(() => {});
       }
     }
 
-    // CHAPTER 1: Passcode Logic
+    // CHAPTER 1: PASSCODE
     let enteredPin = "";
     function startKeypad(type) {
       document.getElementById('stage1').style.display = 'none';
-      const keypad = document.getElementById('keypadCard');
-      keypad.style.display = 'block';
-
+      document.getElementById('keypadCard').style.display = 'block';
       if (type === '17') {
         document.getElementById('pinSubtitle').innerText = "English calendar confirmed! Enter DDMM to verify:";
       } else if (type === '18') {
         document.getElementById('pinSubtitle').innerText = "Tamil calendar traditions! Enter DDMM to verify:";
       } else {
-        document.getElementById('pinSubtitle').innerText = "48-Hour pass requested! Enter your DDMM birth code:";
+        document.getElementById('pinSubtitle').innerText = "48-Hour VIP pass requested! Enter your DDMM birth code:";
       }
     }
 
     function tapKey(n) {
       if (enteredPin.length < 4) {
         enteredPin += n;
-        updatePinDots();
-        if (enteredPin.length === 4) {
-          setTimeout(verifyPin, 150);
-        }
+        updateDots();
+        if (enteredPin.length === 4) setTimeout(verifyPin, 150);
       }
     }
 
     function backspacePin() {
       if (enteredPin.length > 0) {
         enteredPin = enteredPin.slice(0, -1);
-        updatePinDots();
+        updateDots();
         document.getElementById('pinError').innerText = "";
       }
     }
 
     function clearPin() {
       enteredPin = "";
-      updatePinDots();
+      updateDots();
       document.getElementById('pinError').innerText = "";
     }
 
-    function updatePinDots() {
+    function updateDots() {
       for (let i = 0; i < 4; i++) {
         const d = document.getElementById(`d${i}`);
         if (i < enteredPin.length) d.classList.add('filled');
@@ -590,128 +702,53 @@
     }
 
     function verifyPin() {
-      // Accepts either 1709 (English) or 1809 (Tamil)
       if (enteredPin === "1709" || enteredPin === "1809") {
         document.getElementById('keypadCard').style.display = 'none';
         goToStage(2);
-        loadQuizQuestion(0);
       } else {
-        document.getElementById('pinError').innerText = "Incorrect code. Try 1709 or 1809 😉";
+        document.getElementById('pinError').innerText = "Try 1709 or 1809 😉";
         setTimeout(clearPin, 600);
       }
     }
 
-    // CHAPTER 2: The Sobana Trivia Quiz
-    const quizData = [
-      {
-        q: "What is your official legal duty starting midnight on Sept 17?",
-        options: [
-          { text: "Smile, eat cake, and ignore all work stress", correct: true, comment: "Spot on! Science proves work thoughts ruin birthday cakes." },
-          { text: "Reply to every single message in 5 seconds", correct: false, comment: "Wrong! Birthday VIPs are legally allowed to reply whenever they want." },
-          { text: "Start overthinking life goals at 2:00 AM", correct: false, comment: "Strictly banned under the Birthday Protocol!" }
-        ]
-      },
-      {
-        q: "According to the Tamil Calendar, Sept 18 is your day. What does this mean?",
-        options: [
-          { text: "The English calendar birthday yesterday is canceled", correct: false, comment: "Never give up a day of celebration!" },
-          { text: "You get back-to-back celebrations for 48 full hours", correct: true, comment: "Bingo! 2 days of treats, wishes, and zero complaints." },
-          { text: "You have to age two years at once", correct: false, comment: "Definitely not how aging works, luckily!" }
-        ]
-      },
-      {
-        q: "What is the verdict for this upcoming year?",
-        options: [
-          { text: "A peaceful year filled with clarity, success & good memories", correct: true, comment: "Confirmed by unanimous decision. 🌟" },
-          { text: "Mild chaos with occasional snack breaks", correct: true, comment: "Also very realistic, but the peace and success come first!" }
-        ]
+    // CHAPTER 2: CANDLE BLOWOUT
+    let candleBlown = false;
+    function blowCandle() {
+      if (!candleBlown) {
+        candleBlown = true;
+        document.getElementById('candleFlame').classList.add('blown');
+        document.getElementById('wishStatus').innerText = "Wish Locked in the Cosmos! 🌟";
+        document.getElementById('candleNextBtn').style.display = 'block';
+        confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
       }
+    }
+
+    // CHAPTER 4: RULES TOGGLE
+    function toggleRule(el) {
+      el.classList.toggle('checked');
+    }
+
+    // CHAPTER 5: POLAROID INTERACTION
+    function tapPolaroid(card, msg) {
+      confetti({ particleCount: 20, spread: 45, origin: { y: 0.7 } });
+      card.style.transform = 'scale(1.04) rotate(0deg)';
+      setTimeout(() => {
+        card.style.transform = '';
+      }, 350);
+    }
+
+    // FLOATING BANTER BUTTON
+    let secretCount = 0;
+    const banter = [
+      "⚠️ Why did you press that?!",
+      "🛑 Seriously, stop touching this button.",
+      "🍰 Fine! Each press grants 1 additional slice of cake.",
+      "👑 Okay, you are officially the most stubborn birthday VIP."
     ];
-
-    let currentQ = 0;
-    function loadQuizQuestion(index) {
-      const data = quizData[index];
-      document.getElementById('quizTitle').innerText = `Question ${index + 1} of ${quizData.length}`;
-      document.getElementById('quizQuestion').innerText = data.q;
-      
-      const optContainer = document.getElementById('quizOptions');
-      optContainer.innerHTML = '';
-      document.getElementById('quizFeedback').style.display = 'none';
-      document.getElementById('quizNextBtn').style.display = 'none';
-
-      data.options.forEach(opt => {
-        const btn = document.createElement('button');
-        btn.className = 'choice-btn';
-        btn.innerText = opt.text;
-        btn.onclick = () => {
-          document.getElementById('quizFeedback').innerText = opt.comment;
-          document.getElementById('quizFeedback').style.display = 'block';
-          document.getElementById('quizNextBtn').style.display = 'block';
-          confetti({ particleCount: 20, spread: 40, origin: { y: 0.7 } });
-        };
-        optContainer.appendChild(btn);
-      });
-    }
-
-    function nextQuestion() {
-      currentQ++;
-      if (currentQ < quizData.length) {
-        loadQuizQuestion(currentQ);
-      } else {
-        goToStage(3);
-      }
-    }
-
-    // CHAPTER 3: Rules & Clauses
-    function toggleRule(elem) {
-      elem.classList.toggle('checked');
-    }
-
-    function finishRules() {
-      confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
-      goToStage(4);
-    }
-
-    // CHAPTER 4: Prophecy Generator
-    const fortunes = [
-      "🌟 A surprising opportunity will land in your lap before November.",
-      "✨ A spontaneous road trip or getaway will bring you unmatched peace.",
-      "☕ That one thing you've been quietly overthinking? It works out smoothly.",
-      "🍀 Your energy levels and sleep schedule will finally find peace.",
-      "💫 Someone close to you is preparing a great surprise for you."
-    ];
-
-    let fortuneIndex = 0;
-    let drawsLeft = 3;
-
-    function drawFortune() {
-      if (drawsLeft > 0) {
-        drawsLeft--;
-        document.getElementById('fortuneCount').innerText = drawsLeft;
-        document.getElementById('fortuneOutput').innerText = fortunes[fortuneIndex % fortunes.length];
-        fortuneIndex++;
-        confetti({ particleCount: 25, spread: 50, origin: { y: 0.7 } });
-        
-        if (drawsLeft === 0) {
-          document.getElementById('fortuneDoneBtn').style.display = 'block';
-        }
-      } else {
-        document.getElementById('fortuneOutput').innerText = fortunes[fortuneIndex % fortunes.length];
-        fortuneIndex++;
-      }
-    }
-
-    // Music Player
-    function toggleMusic() {
-      const audio = document.getElementById('ambientTrack');
-      const icon = document.getElementById('musicIcon');
-      if (audio.paused) {
-        audio.play();
-        icon.innerText = '⏸';
-      } else {
-        audio.pause();
-        icon.innerText = '▶';
-      }
+    function pressSecret() {
+      alert(banter[secretCount % banter.length]);
+      secretCount++;
+      confetti({ particleCount: 15, spread: 35 });
     }
   </script>
 </body>
