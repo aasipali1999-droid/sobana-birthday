@@ -78,11 +78,11 @@
     .progress-fill {
       height: 100%;
       background: var(--gold);
-      width: 16%;
+      width: 14%;
       transition: width 0.4s ease;
     }
 
-    /* Standard Card Container */
+    /* Card Container */
     .card {
       background: var(--surface);
       border: 1px solid var(--surface-border);
@@ -220,7 +220,7 @@
     .key:active { transform: scale(0.92); background: rgba(255,255,255,0.1); }
     .key.action { background: transparent; border: none; font-size: 0.85rem; color: var(--muted); }
 
-    /* CANDLE BLOWOUT COMPONENT */
+    /* CANDLE BLOWOUT */
     .candle-container {
       display: flex;
       flex-direction: column;
@@ -251,7 +251,6 @@
       background: linear-gradient(to right, #f7e1d7, #ffffff, #dedbd2);
       border-radius: 4px;
       box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-      position: relative;
     }
 
     .candle-wick {
@@ -266,7 +265,64 @@
       100% { transform: scale(1.06) rotate(1deg); }
     }
 
-    /* ASTROLOGY COMPARISON TABLE */
+    /* BIOMETRIC AURA SCANNER */
+    .scanner-pad {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 2px dashed rgba(226, 180, 116, 0.4);
+      margin: 20px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      touch-action: none;
+      overflow: hidden;
+    }
+
+    .scanner-pad svg {
+      width: 60px;
+      height: 60px;
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 1.5;
+      transition: opacity 0.3s;
+    }
+
+    .laser-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: #ff5277;
+      box-shadow: 0 0 12px #ff5277;
+      display: none;
+    }
+
+    .scanning .laser-line {
+      display: block;
+      animation: scanAnim 1.2s infinite ease-in-out alternate;
+    }
+
+    @keyframes scanAnim {
+      0% { top: 10%; }
+      100% { top: 90%; }
+    }
+
+    .aura-stats {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--surface-border);
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 16px;
+      display: none;
+      text-align: left;
+    }
+
+    /* ASTROLOGY COMPARISON */
     .astro-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -290,63 +346,45 @@
       margin-bottom: 6px;
     }
 
-    .astro-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin-bottom: 8px;
+    .astro-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; }
+    .astro-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+
+    /* SCRATCH-OFF CANVAS */
+    .scratch-wrapper {
+      position: relative;
+      width: 100%;
+      height: 160px;
+      border-radius: 16px;
+      overflow: hidden;
+      margin: 18px 0;
+      user-select: none;
     }
 
-    .astro-desc {
-      font-size: 0.8rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    /* POLAROID CARDS */
-    .polaroid-gallery {
+    .scratch-reward {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #1b1f2b, #11131a);
+      border: 1px solid rgba(226, 180, 116, 0.3);
+      border-radius: 16px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      margin: 18px 0;
-    }
-
-    .polaroid {
-      background: #fff;
-      color: #222;
-      padding: 14px 14px 22px;
-      border-radius: 8px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-      transform: rotate(-1deg);
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    .polaroid:nth-child(even) { transform: rotate(1.5deg); }
-    .polaroid:active { transform: scale(0.98); }
-
-    .photo-area {
-      height: 140px;
-      background: #1a1c22;
-      border-radius: 4px;
-      display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--gold);
-      font-size: 2.2rem;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .polaroid-caption {
-      font-family: 'Playfair Display', serif;
-      font-size: 0.95rem;
-      font-style: italic;
-      margin-top: 12px;
       text-align: center;
-      color: #333;
+      padding: 20px;
     }
 
-    /* RULES & CHECKLIST */
+    #scratchCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      touch-action: none;
+    }
+
+    /* VIP RULES */
     .rule-item {
       display: flex;
       align-items: flex-start;
@@ -378,7 +416,7 @@
       color: #121316;
     }
 
-    /* FINAL LETTER */
+    /* LETTER & WHATSAPP */
     .paper {
       background: var(--paper);
       color: var(--paper-ink);
@@ -421,7 +459,25 @@
       font-size: 1.15rem;
     }
 
-    /* FLOATING 'DO NOT PRESS' BUTTON */
+    .btn-wa {
+      width: 100%;
+      background: #25d366;
+      color: #fff;
+      border: none;
+      padding: 16px;
+      border-radius: 16px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    /* FLOATING EMERGENCY BUTTON */
     .panic-btn {
       position: fixed;
       bottom: 18px;
@@ -451,7 +507,7 @@
   <div class="app">
     <!-- Progress Indicator -->
     <div class="progress-bar-container">
-      <span class="step-indicator" id="stepIndicator">Stage 1 of 6</span>
+      <span class="step-indicator" id="stepIndicator">Stage 1 of 7</span>
       <div class="progress-track">
         <div class="progress-fill" id="progressFill"></div>
       </div>
@@ -510,7 +566,7 @@
       <div id="pinError" style="color:#ff6b6b; font-size:0.8rem; text-align:center; margin-top:14px; min-height:18px;"></div>
     </div>
 
-    <!-- STAGE 2: INTERACTIVE CANDLE BLOWOUT -->
+    <!-- STAGE 2: CANDLE BLOWOUT -->
     <div class="card" id="stage2" style="display:none; text-align:center;">
       <span class="badge">Mandatory Ritual</span>
       <h2>Make A Silent Wish</h2>
@@ -523,11 +579,39 @@
       </div>
 
       <div id="wishStatus" style="font-size:0.9rem; color:var(--gold); font-weight:600; min-height:22px;">Tap the flame to blow ✨</div>
-      <button class="btn-next" id="candleNextBtn" style="display:none;" onclick="goToStage(3)">Continue to Dual Forecast →</button>
+      <button class="btn-next" id="candleNextBtn" style="display:none;" onclick="goToStage(3)">Calibrate Biometrics →</button>
     </div>
 
-    <!-- STAGE 3: TAMIL VS ENGLISH CALENDAR ROAST -->
-    <div class="card" id="stage3" style="display:none;">
+    <!-- STAGE 3: BIOMETRIC THUMBPRINT SCANNER -->
+    <div class="card" id="stage3" style="display:none; text-align:center;">
+      <span class="badge">Biometric Diagnostic</span>
+      <h2>Birthday Aura Scan</h2>
+      <p class="subtext">Place and hold your thumb firmly inside the circle for 3 seconds.</p>
+
+      <div class="scanner-pad" id="scannerPad" 
+           onpointerdown="startScan(event)" 
+           onpointerup="cancelScan()" 
+           onpointerleave="cancelScan()">
+        <div class="laser-line"></div>
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2C7.03 2 3 6.03 3 11v2c0 4.97 4.03 9 9 9s9-4.03 9-9v-2c0-4.97-4.03-9-9-9zm0 2c3.87 0 7 3.13 7 7v2c0 3.87-3.13 7-7 7s-7-3.13-7-7v-2c0-3.87 3.13-7 7-7zm0 3c-2.21 0-4 1.79-4 4v2c0 2.21 1.79 4 4 4s4-1.79 4-4v-2c0-2.21-1.79-4-4-4z"/>
+        </svg>
+      </div>
+
+      <div id="scanStatus" style="font-size:0.85rem; color:var(--muted); min-height:20px;">Ready for thumbprint...</div>
+
+      <div class="aura-stats" id="auraStats">
+        <div style="font-size:0.75rem; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:8px;">Scan Results:</div>
+        <div style="font-size:0.9rem; margin-bottom:4px;">✨ <b>Royalty Level:</b> 98.4% (Critical Maximum)</div>
+        <div style="font-size:0.9rem; margin-bottom:4px;">🎂 <b>Patience for Stress:</b> 0.0%</div>
+        <div style="font-size:0.9rem;">🍰 <b>Requirement:</b> Immediate dessert & VIP treatment.</div>
+      </div>
+
+      <button class="btn-next" id="scanNextBtn" style="display:none;" onclick="goToStage(4)">View Planetary Analysis →</button>
+    </div>
+
+    <!-- STAGE 4: TAMIL VS ENGLISH ASTROLOGY -->
+    <div class="card" id="stage4" style="display:none;">
       <span class="badge">Astrological Audit</span>
       <h2>Dual Planetary Analysis</h2>
       <p class="subtext">Having two birthdays means navigating two conflicting astrological personalities:</p>
@@ -545,16 +629,30 @@
         </div>
       </div>
 
-      <div class="astro-card" style="margin-top:4px;">
-        <div class="astro-tag">Unified Verdict</div>
-        <div class="astro-desc" style="color:#fff;">You are 100% entitled to 48 hours of luxury, snacks, and zero responsibilities.</div>
-      </div>
-
-      <button class="btn-next" onclick="goToStage(4)">Inspect 48-Hour Protocol →</button>
+      <button class="btn-next" onclick="goToStage(5)">Scratch Mystery Privilege →</button>
     </div>
 
-    <!-- STAGE 4: VIP RULES CHECKLIST -->
-    <div class="card" id="stage4" style="display:none;">
+    <!-- STAGE 5: SCRATCH-OFF CARD -->
+    <div class="card" id="stage5" style="display:none; text-align:center;">
+      <span class="badge">Exclusive Perk</span>
+      <h2>Scratch-Off Voucher</h2>
+      <p class="subtext">Use your finger to scratch the gold silver card below to reveal your prize:</p>
+
+      <div class="scratch-wrapper">
+        <div class="scratch-reward">
+          <div style="font-size:1.8rem; margin-bottom:6px;">🎁</div>
+          <h3 style="font-size:1.05rem; color:var(--gold); margin-bottom:4px;">LIFETIME BIRTHDAY PASS</h3>
+          <p style="font-size:0.75rem; color:#ccc;">Valid for: 1 Free Dinner / Coffee of Choice + Zero Questions Asked.</p>
+        </div>
+        <canvas id="scratchCanvas" width="380" height="160"></canvas>
+      </div>
+
+      <div id="scratchPrompt" style="font-size:0.8rem; color:var(--muted); min-height:18px;">Scratch at least 50% of the card ✨</div>
+      <button class="btn-next" id="scratchNextBtn" style="display:none;" onclick="goToStage(6)">Inspect 48-Hour Protocol →</button>
+    </div>
+
+    <!-- STAGE 6: 48-HR PROTOCOL CHECKLIST -->
+    <div class="card" id="stage6" style="display:none;">
       <span class="badge">Legal Terms & Conditions</span>
       <h2>The 48-Hour Protocol</h2>
       <p class="subtext">Tap to sign and accept your birthday privileges through Sept 18 night:</p>
@@ -583,31 +681,11 @@
         </div>
       </div>
 
-      <button class="btn-next" onclick="goToStage(5)">View Memory Polaroids →</button>
+      <button class="btn-next" onclick="goToStage(7)">Read Personal Letter →</button>
     </div>
 
-    <!-- STAGE 5: POLAROID MEMORY SNAPSHOTS -->
-    <div class="card" id="stage5" style="display:none;">
-      <span class="badge">Time Capsule</span>
-      <h2>Polaroid Memories</h2>
-      <p class="subtext">Tap any polaroid snapshot to inspect:</p>
-
-      <div class="polaroid-gallery">
-        <div class="polaroid" onclick="tapPolaroid(this, 'The Unstoppable Energy ⚡')">
-          <div class="photo-area">🌸</div>
-          <div class="polaroid-caption">"Radiating calm & grace as always"</div>
-        </div>
-        <div class="polaroid" onclick="tapPolaroid(this, 'Double Celebration Mode 🎉')">
-          <div class="photo-area">🎂</div>
-          <div class="polaroid-caption">"Sept 17 vs Sept 18: Why not both?"</div>
-        </div>
-      </div>
-
-      <button class="btn-next" onclick="goToStage(6)">Read Personal Letter →</button>
-    </div>
-
-    <!-- STAGE 6: THE PRIVATE LETTER -->
-    <div id="stage6" style="display:none;">
+    <!-- STAGE 7: THE FINAL LETTER + WHATSAPP -->
+    <div id="stage7" style="display:none;">
       <div class="paper">
         <div class="stamp">SEP 17-18</div>
         <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:1.5px; color:#888;">Personal Edition</div>
@@ -623,6 +701,10 @@
         </div>
 
         <div class="signature">— Best wishes, always ✨</div>
+
+        <a class="btn-wa" href="https://wa.me/?text=I%20have%20reviewed%20my%2048-hour%20birthday%20audit%20and%20officially%20claim%20my%20VIP%20status!%20%F0%9F%91%91%E2%9C%A8" target="_blank">
+          Send Verdict via WhatsApp 💬
+        </a>
       </div>
     </div>
 
@@ -640,15 +722,19 @@
     }
 
     function goToStage(stageNum) {
-      document.querySelectorAll('.app > .card, .app > #stage6').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.app > .card, .app > #stage7').forEach(el => el.style.display = 'none');
       const target = document.getElementById(`stage${stageNum}`);
       if (target) target.style.display = 'block';
-      setProgress(stageNum, 6);
+      setProgress(stageNum, 7);
 
-      if (stageNum === 6) {
+      if (stageNum === 5) {
+        initScratchCard();
+      }
+
+      if (stageNum === 7) {
         confetti({
-          particleCount: 80,
-          spread: 75,
+          particleCount: 90,
+          spread: 80,
           colors: ['#e2b474', '#ffffff', '#e07a5f'],
           origin: { y: 0.6 }
         });
@@ -657,7 +743,7 @@
       }
     }
 
-    // CHAPTER 1: PASSCODE
+    // PASSCODE LOGIC
     let enteredPin = "";
     function startKeypad(type) {
       document.getElementById('stage1').style.display = 'none';
@@ -711,44 +797,112 @@
       }
     }
 
-    // CHAPTER 2: CANDLE BLOWOUT
+    // CANDLE BLOWOUT
     let candleBlown = false;
     function blowCandle() {
       if (!candleBlown) {
         candleBlown = true;
         document.getElementById('candleFlame').classList.add('blown');
-        document.getElementById('wishStatus').innerText = "Wish Locked in the Cosmos! 🌟";
+        document.getElementById('wishStatus').innerText = "Wish Locked into Cosmos! 🌟";
         document.getElementById('candleNextBtn').style.display = 'block';
         confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
       }
     }
 
-    // CHAPTER 4: RULES TOGGLE
+    // BIOMETRIC SCANNER
+    let scanTimer = null;
+    function startScan(e) {
+      e.preventDefault();
+      const pad = document.getElementById('scannerPad');
+      const status = document.getElementById('scanStatus');
+      pad.classList.add('scanning');
+      status.innerText = "Analyzing aura frequencies...";
+
+      if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+
+      scanTimer = setTimeout(() => {
+        pad.classList.remove('scanning');
+        status.innerText = "Calibration Complete! ✅";
+        document.getElementById('auraStats').style.display = 'block';
+        document.getElementById('scanNextBtn').style.display = 'block';
+        confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
+      }, 2500);
+    }
+
+    function cancelScan() {
+      if (scanTimer) {
+        clearTimeout(scanTimer);
+        document.getElementById('scannerPad').classList.remove('scanning');
+        if (document.getElementById('scanNextBtn').style.display !== 'block') {
+          document.getElementById('scanStatus').innerText = "Hold steady for full 3s!";
+        }
+      }
+    }
+
+    // SCRATCH-OFF CARD CANVAS
+    let scratchInitialized = false;
+    function initScratchCard() {
+      if (scratchInitialized) return;
+      scratchInitialized = true;
+
+      const canvas = document.getElementById('scratchCanvas');
+      const ctx = canvas.getContext('2d');
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+
+      // Draw metallic cover
+      ctx.fillStyle = '#9e8a68';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#fff';
+      ctx.font = '600 15px Plus Jakarta Sans';
+      ctx.textAlign = 'center';
+      ctx.fillText('✨ Scratch Here to Reveal Perk ✨', canvas.width / 2, canvas.height / 2 + 5);
+
+      let isDrawing = false;
+      function scratch(e) {
+        if (!isDrawing) return;
+        const box = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        const x = clientX - box.left;
+        const y = clientY - box.top;
+
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.beginPath();
+        ctx.arc(x, y, 22, 0, Math.PI * 2);
+        ctx.fill();
+
+        document.getElementById('scratchNextBtn').style.display = 'block';
+        document.getElementById('scratchPrompt').innerText = "Perk Unlocked! 🎟️";
+      }
+
+      canvas.addEventListener('mousedown', () => isDrawing = true);
+      canvas.addEventListener('mouseup', () => isDrawing = false);
+      canvas.addEventListener('mousemove', scratch);
+
+      canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); });
+      canvas.addEventListener('touchend', () => isDrawing = false);
+      canvas.addEventListener('touchmove', scratch);
+    }
+
+    // RULES TOGGLE
     function toggleRule(el) {
       el.classList.toggle('checked');
     }
 
-    // CHAPTER 5: POLAROID INTERACTION
-    function tapPolaroid(card, msg) {
-      confetti({ particleCount: 20, spread: 45, origin: { y: 0.7 } });
-      card.style.transform = 'scale(1.04) rotate(0deg)';
-      setTimeout(() => {
-        card.style.transform = '';
-      }, 350);
-    }
-
-    // FLOATING BANTER BUTTON
+    // FLOATING EMERGENCY BUTTON
     let secretCount = 0;
     const banter = [
       "⚠️ Why did you press that?!",
       "🛑 Seriously, stop touching this button.",
       "🍰 Fine! Each press grants 1 additional slice of cake.",
-      "👑 Okay, you are officially the most stubborn birthday VIP."
+      "👑 Okay, you are officially the most curious birthday VIP."
     ];
     function pressSecret() {
       alert(banter[secretCount % banter.length]);
       secretCount++;
-      confetti({ particleCount: 15, spread: 35 });
+      confetti({ particleCount: 20, spread: 45 });
     }
   </script>
 </body>
